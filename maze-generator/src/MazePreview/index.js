@@ -3,21 +3,26 @@ import Sheet from '@mui/joy/Sheet';
 import MazeGenerator from '../mazeGenerator'
 
 function MazePreview(props) {
-  const { mazeOptions } = props
+  const { options } = props
   const [maze, setMaze] = useState(null)
   const [loaded, setLoaded] = useState(false)
   const mazeTargetRef = useRef(null)
 
   useEffect(() => {
-    console.log(loaded)
+    setLoaded(false)
+  }, [options])
+
+
+  useEffect(() => {
     if (mazeTargetRef?.current && !loaded) {
       setLoaded(true)
       if (maze) {
         maze.remove()
+        mazeTargetRef.current.innerHTML = ''
       }
-      setMaze(new MazeGenerator(mazeTargetRef?.current))
+      setMaze(new MazeGenerator(mazeTargetRef.current, options))
     }
-  }, [mazeTargetRef, maze, mazeOptions, loaded])
+  }, [mazeTargetRef, maze, options, loaded])
 
   return (
     <div className="MazePreview">

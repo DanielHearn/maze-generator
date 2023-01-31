@@ -1,6 +1,8 @@
+import { generateDefaultOptions } from "./helpers"
+
 export default class MazeGenerator {
-  constructor (targetElement) {
-    this.scale = 20
+  constructor (targetElement, options = generateDefaultOptions()) {
+    this.options = options
     this.sizeX = 20
     this.sizeY = 20
     this.wallWidth = 1
@@ -35,8 +37,8 @@ export default class MazeGenerator {
     this.drawMaze()
   }
   setCanvasSize() {
-    this.canvas.width = this.sizeX * this.scale
-    this.canvas.height = this.sizeY * this.scale
+    this.canvas.width = this.sizeX * this.options.scale
+    this.canvas.height = this.sizeY * this.options.scale
   }
   createCanvas() {
     this.canvas = document.createElement('canvas')
@@ -65,7 +67,7 @@ export default class MazeGenerator {
     const cellColor = cell.solved ? this.colors.solved : this.colors[cellType]
     const cellX = cell.getX()
     const cellY = cell.getY()
-    const scale = this.scale
+    const scale = this.options.scale
     
     // Draw cell interior
     this.ctx.fillStyle = cellColor
@@ -307,8 +309,6 @@ class Maze {
         } else if(this.path.length) {
           // Backtrack 
           this.createMazePath(this.path.pop())
-        } else {
-          console.log('Maze generation complete')
         }
       }
     } 
