@@ -23,9 +23,14 @@ function MazePreview(props) {
   }, [options])
 
   useEffect(() => {
-    if (loaded && maze && !isEqual(optionsThatRegenerated, prevOptionsThatRegenerated)) {
-      maze.setOptions(options)
-      maze.regenerate()
+    if (loaded && maze) {
+      if (!isEqual(optionsThatRegenerated, prevOptionsThatRegenerated)) {
+        maze.setOptions(options)
+        maze.regenerate()
+      } else {
+        maze.setOptions(options)
+        maze.redraw()
+      }
       setPrevOptionsThatRegenerated(optionsThatRegenerated)
     }
   }, [loaded, maze, options, optionsThatRegenerated, prevOptionsThatRegenerated])

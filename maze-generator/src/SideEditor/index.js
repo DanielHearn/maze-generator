@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import Button from '@mui/joy/Button';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
@@ -7,58 +8,62 @@ import { v4 } from "uuid";
 import './style.css';
 import { OPTIONS, OPTION_TYPES } from '../constants';
 
+const Option = (props) => {
+  const { option, value, setOptionField } = props;
+
+  if (value === undefined) {
+    return null
+  }
+  
+  switch (option.type) {
+    case OPTION_TYPES.NUMBER:
+      return <Stack>
+        <span>{option.label}</span>
+        <Input value={value} type="number" min={4} max={50} onChange={(value) => setOptionField(option.key, Number(value.target.value))}/>
+        <Slider value={value} min={4} max={50} onChange={(value) => setOptionField(option.key, value.target.value)}/>
+      </Stack>
+    case OPTION_TYPES.STRING:
+      return <Stack>
+        <span>{option.label}</span>
+        <Input value={value} type="string" onChange={(value) => setOptionField(option.key, Number(value.target.value))}/>
+      </Stack>
+    default:
+      return null;
+  }
+}
+
+const Options = (props) => {
+  const { options, optionValues, setOptionField } = props;
+  return Object.values(options).map(option => <Option key={option.key} option={option} value={optionValues[option.key]} setOptionField={setOptionField}/>)
+}
+
+
 function SideEditor(props) {
   const { options, setOptions } = props
   
-  const setOptionField = (field, value) => {
+  const setOptionField = useCallback((field, value) => {
     setOptions({
       ...options,
       solved: false,
       [field]: value
     })
-  }
+ }, [options, setOptions]);
 
-  const updateOptiosn = (updates) => {
+  const updateOptions = useCallback((updates) => {
     setOptions({
       ...options,
       ...updates
     })
-  }
-
-  const Option = (props) => {
-    const { option } = props;
-    const optionValue = options[option.key]
-
-    switch (option.type) {
-      case OPTION_TYPES.NUMBER:
-        return <Stack>
-          <span>{option.label}</span>
-          <Input value={optionValue} type="number" min={4} max={50} onChange={(value) => setOptionField(option.key, Number(value.target.value))}/>
-          <Slider value={optionValue} min={4} max={50} onChange={(value) => setOptionField(option.key, value.target.value)}/>
-        </Stack>
-      case OPTION_TYPES.STRING:
-        return <Stack>
-          <span>{option.label}</span>
-          <Input value={optionValue} type="string" onChange={(value) => setOptionField(option.key, Number(value.target.value))}/>
-        </Stack>
-      default:
-        return null;
-    }
-  }
-
-  const Options = (props) => {
-    const { options } = props;
-    return Object.values(options).map(option => <Option key={option.key} option={option}/>)
-  }
+ }, [options, setOptions]);
 
   return (
     <div className="SideEditor">
       <Sheet>
         <Stack>
-          <Options options={OPTIONS} />
+          <Options options={OPTIONS} setOptionField={setOptionField} optionValues={options}/>
           <Stack spacing={1}>
             <Button variant="solid" onClick={() => { 
-              updateOptiosn({ id: v4(), solved: false});
+              updateOptions({ id: v4(), solved: false});
             }}>Regenerate</Button>
             <Button variant="solid" onClick={() => setOptionField('solved', !options.solved)}>{ !options.solved ? 'Solve' : 'Unsolve' }</Button>
             <Button variant="outlined">Save</Button>
