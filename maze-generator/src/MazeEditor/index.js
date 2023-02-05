@@ -1,12 +1,13 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import MazePreview from '../MazePreview'
 import SideEditor from '../SideEditor'
 import { generateDefaultOptions } from '../helpers'
+import './style.css';
 
 function MazeEditor() {
   const [options, setOptions] = useState(generateDefaultOptions())
   const [loaded, setLoaded] = useState(false)
-
+  
   useEffect(() => {
     if (options) {
       setLoaded(true)
@@ -15,12 +16,17 @@ function MazeEditor() {
 
   return (
     <div className="MazeEditor">
-      { loaded && 
-        <>
-          <MazePreview options={options}/>
-          <SideEditor options={options} setOptions={setOptions}/>
-        </>
-      }
+      <div className="MazeEditor__header">
+        Maze Generator
+      </div>
+      <div className="MazeEditor__content">
+        {loaded && 
+          <>
+            <MazePreview options={options} setOptions={setOptions}/>
+            <SideEditor options={options} setOptions={setOptions}/>
+          </>
+        }
+      </div>
     </div>
   );
 }

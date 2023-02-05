@@ -1,0 +1,7 @@
+.MazePreview {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  align-items: center;
+  justify-content: center;
+}

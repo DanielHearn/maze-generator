@@ -1,0 +1,9 @@
+.MazeEditor {
+  display: flex;
+  flex-direction: column;
+}
+
+.MazeEditor__content {
+  display: flex;
+  flex-direction: row;
+}

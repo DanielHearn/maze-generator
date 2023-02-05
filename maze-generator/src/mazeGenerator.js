@@ -3,8 +3,6 @@ import { generateDefaultOptions } from "./helpers"
 export default class MazeGenerator {
   constructor (targetElement, options = generateDefaultOptions()) {
     this.options = options
-    this.sizeX = 20
-    this.sizeY = 20
     this.wallWidth = 1
     this.targetElement = targetElement
       
@@ -24,21 +22,28 @@ export default class MazeGenerator {
 
     return this
   }
+  setOptions(options) {
+    this.options = options
+  }
+  regenerate() {
+    this.setCanvasSize()
+    this.generate()
+  }
   redraw() {
     this.clearCanvas()
     this.setCanvasSize()
     this.drawMaze()
   }
   generate() {
-    this.maze = new Maze(this.sizeX, this.sizeY)
+    this.maze = new Maze(this.options.width, this.options.height)
     this.mazeMap = this.maze.getMaze()
     this.start = this.maze.getStart()
     this.end = this.maze.getEnd()
     this.drawMaze()
   }
   setCanvasSize() {
-    this.canvas.width = this.sizeX * this.options.scale
-    this.canvas.height = this.sizeY * this.options.scale
+    this.canvas.width = this.options.width * this.options.scale
+    this.canvas.height = this.options.height * this.options.scale
   }
   createCanvas() {
     this.canvas = document.createElement('canvas')
@@ -55,16 +60,16 @@ export default class MazeGenerator {
   drawMaze() {
     const maze = this.mazeMap
     if(maze && maze.length) {
-      for (let x = 0; x < this.sizeX; x++) {
-        for (let y = 0; y < this.sizeY; y++) {
+      for (let x = 0; x < this.options.width; x++) {
+        for (let y = 0; y < this.options.height; y++) {
           this.drawCell(maze[x][y])
         }
       }
     }
   }
-  drawCell(cell) {
+  drawCell(cell, solved) {
     const cellType = cell.getType()
-    const cellColor = cell.solved ? this.colors.solved : this.colors[cellType]
+    const cellColor = solved ? this.colors.solved : this.colors[cellType]
     const cellX = cell.getX()
     const cellY = cell.getY()
     const scale = this.options.scale
@@ -157,7 +162,6 @@ export default class MazeGenerator {
         const next = potential[direction]
 
         if(next.cell === this.end) {
-          next.cell.solved = true
           this.path.push(next.cell)
         } else {
           this.dfs(next.cell)
@@ -173,9 +177,16 @@ export default class MazeGenerator {
     
     for(let i = 0; i < this.path.length; i++) {
       const cell = this.path[i]
-      cell.solved = true
-      this.drawCell(cell)
+      this.drawCell(cell, true)
     }
+  }
+  unsolve() {
+    for(let i = 0; i < this.path.length; i++) {
+      const cell = this.path[i]
+      this.drawCell(cell, false)
+      cell.visited = false
+    }
+    this.path = []
   }
   randomIntInRange(min, max) {
    min = Math.ceil(min);

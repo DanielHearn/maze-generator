@@ -1,5 +1,10 @@
+import { OPTIONS } from "./constants";
+
 export const generateDefaultOptions = () => {
   return {
-    scale: 20
+    ...Object.values(OPTIONS).reduce((acc, value) => {
+      acc[value.key] = value.default
+      return acc
+    }, {}),
   }
 }
