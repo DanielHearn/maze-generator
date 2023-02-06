@@ -39,7 +39,7 @@ const Options = (props) => {
 
 
 function SideEditor(props) {
-  const { options, setOptions } = props
+  const { options, setOptions, maze } = props
   
   const setOptionField = useCallback((field, value) => {
     setOptions({
@@ -56,6 +56,10 @@ function SideEditor(props) {
     })
  }, [options, setOptions]);
 
+ if (!maze) {
+  return null;
+ }
+
   return (
     <div className="SideEditor">
       <Sheet>
@@ -66,8 +70,8 @@ function SideEditor(props) {
               updateOptions({ id: v4(), solved: false});
             }}>Regenerate</Button>
             <Button variant="solid" onClick={() => setOptionField('solved', !options.solved)}>{ !options.solved ? 'Solve' : 'Unsolve' }</Button>
-            <Button variant="outlined">Save</Button>
-            <Button variant="outlined">Print</Button>
+            <Button variant="outlined" onClick={() => maze.save()}>Save</Button>
+            <Button variant="outlined" >Print</Button>
           </Stack>
         </Stack>
       </Sheet>

@@ -195,6 +195,16 @@ export default class MazeGenerator {
    max = Math.floor(max);
    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+  save() {
+    const mazeElement = document.querySelector('#MazeCanvas canvas');
+    if (mazeElement) {
+      const link = document.createElement('a');
+      link.download = `maze_${new Date().toISOString()}.png`;
+      link.href = mazeElement.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      link.click();
+      link.remove();
+    }
+  }
 }
 
 class Maze {

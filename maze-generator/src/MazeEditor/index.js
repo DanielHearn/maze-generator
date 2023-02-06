@@ -7,7 +7,8 @@ import './style.css';
 function MazeEditor() {
   const [options, setOptions] = useState(generateDefaultOptions())
   const [loaded, setLoaded] = useState(false)
-  
+  const [maze, setMaze] = useState(null)
+
   useEffect(() => {
     if (options) {
       setLoaded(true)
@@ -22,8 +23,8 @@ function MazeEditor() {
       <div className="MazeEditor__content">
         {loaded && 
           <>
-            <MazePreview options={options} setOptions={setOptions}/>
-            <SideEditor options={options} setOptions={setOptions}/>
+            <MazePreview maze={maze} setMaze={setMaze} options={options} setOptions={setOptions}/>
+            <SideEditor maze={maze} options={options} setOptions={setOptions}/>
           </>
         }
       </div>

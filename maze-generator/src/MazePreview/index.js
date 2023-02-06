@@ -6,9 +6,8 @@ import { OPTIONS } from '../constants';
 import './style.css';
 
 function MazePreview(props) {
-  const { options } = props
+  const { options, maze, setMaze } = props
   const mazeTargetRef = useRef(null)
-  const [maze, setMaze] = useState(null)
   const [loaded, setLoaded] = useState(false)
   const [prevOptionsThatRegenerated, setPrevOptionsThatRegenerated] = useState(null)
 
@@ -52,12 +51,12 @@ function MazePreview(props) {
       setLoaded(true)
       setMaze(new MazeGenerator(mazeTargetRef.current, options))
     }
-  }, [mazeTargetRef, maze, options, loaded])
+  }, [mazeTargetRef, maze, options, loaded, setMaze])
 
   return (
     <div className="MazePreview">
         <Sheet variant="outlined">
-          <div ref={mazeTargetRef}/>
+          <div id="MazeCanvas" ref={mazeTargetRef}/>
       </Sheet>
     </div>
   );
