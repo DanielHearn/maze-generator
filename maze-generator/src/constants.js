@@ -39,7 +39,7 @@ export const OPTIONS = {
     label: 'Wall Width',
     type: OPTION_TYPES.NUMBER,
     regen: false,
-    default: 1,
+    default: 2,
     min: 1,
     max: 5
   },

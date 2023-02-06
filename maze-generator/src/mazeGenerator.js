@@ -25,6 +25,7 @@ export default class MazeGenerator {
   setOptions(options) {
     this.options = cloneDeep(options)
     this.options.scale = this.options.scale * 8
+    this.options.wallWidth = this.options.wallWidth * 0.5
   }
   regenerate() {
     this.setCanvasSize()
