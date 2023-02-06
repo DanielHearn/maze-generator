@@ -196,13 +196,42 @@ export default class MazeGenerator {
    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
   save() {
-    const mazeElement = document.querySelector('#MazeCanvas canvas');
-    if (mazeElement) {
+    if (this.canvas) {
       const link = document.createElement('a');
       link.download = `maze_${new Date().toISOString()}.png`;
-      link.href = mazeElement.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      link.href = this.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
       link.click();
       link.remove();
+    }
+  }
+  print() {
+    if (this.canvas) {
+      const image = document.createElement('img');
+      image.src = this.canvas.toDataURL("image/png")
+      image.style.maxWidth = '100%';
+      
+      const iframe = document.createElement('iframe');
+
+      iframe.style.height = 0;
+      iframe.style.visibility = 'hidden';
+      iframe.style.width = 0;
+      
+      iframe.setAttribute('srcdoc', '<html><body></body></html>');
+      
+      document.body.appendChild(iframe);
+
+      iframe.addEventListener('load', function () {
+        const body = iframe.contentDocument.body;
+        body.style.textAlign = 'center';
+        body.appendChild(image);
+
+        image.addEventListener('load', function() {
+          iframe.contentWindow.print();
+        });
+        iframe.contentWindow.addEventListener('afterprint', function () {
+          iframe.parentNode.removeChild(iframe);
+        });
+      });
     }
   }
 }

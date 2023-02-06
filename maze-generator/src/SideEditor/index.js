@@ -71,7 +71,7 @@ function SideEditor(props) {
             }}>Regenerate</Button>
             <Button variant="solid" onClick={() => setOptionField('solved', !options.solved)}>{ !options.solved ? 'Solve' : 'Unsolve' }</Button>
             <Button variant="outlined" onClick={() => maze.save()}>Save</Button>
-            <Button variant="outlined" >Print</Button>
+            <Button variant="outlined" onClick={() => maze.print()}>Print</Button>
           </Stack>
         </Stack>
       </Sheet>
