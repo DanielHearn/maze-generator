@@ -69,7 +69,7 @@ export default class MazeGenerator {
   }
   drawCell(cell, solved) {
     const cellType = cell.getType()
-    const cellColor = solved ? this.colors.solved : this.colors[cellType]
+    const cellColor = cell.solved ? this.colors.solved : this.colors[cellType]
     const cellX = cell.getX()
     const cellY = cell.getY()
     const scale = this.options.scale
@@ -177,14 +177,16 @@ export default class MazeGenerator {
     
     for(let i = 0; i < this.path.length; i++) {
       const cell = this.path[i]
-      this.drawCell(cell, true)
+      cell.solved = true;
+      this.drawCell(cell)
     }
   }
   unsolve() {
     for(let i = 0; i < this.path.length; i++) {
       const cell = this.path[i]
-      this.drawCell(cell, false)
       cell.visited = false
+      cell.solved = false
+      this.drawCell(cell)
     }
     this.path = []
   }
