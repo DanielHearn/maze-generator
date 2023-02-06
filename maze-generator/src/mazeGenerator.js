@@ -1,9 +1,9 @@
 import { generateDefaultOptions } from "./helpers"
+import { cloneDeep } from 'lodash-es'
 
 export default class MazeGenerator {
   constructor (targetElement, options = generateDefaultOptions()) {
-    this.options = options
-    this.wallWidth = 1
+    this.setOptions(options)
     this.targetElement = targetElement
       
     this.colors = {
@@ -23,7 +23,8 @@ export default class MazeGenerator {
     return this
   }
   setOptions(options) {
-    this.options = options
+    this.options = cloneDeep(options)
+    this.options.scale = this.options.scale * 8
   }
   regenerate() {
     this.setCanvasSize()
@@ -86,7 +87,7 @@ export default class MazeGenerator {
     // Draw cell walls but not on maze borders
     if(cellType !== 'border' && cellType !== 'solved' && cell.walls) {
        this.ctx.fillStyle = this.colors.wall
-       const wallWidth = this.wallWidth
+       const wallWidth = this.options.wallWidth
        const cellWalls = cell.getWalls()
        
        if(cellWalls.top) {
@@ -209,7 +210,7 @@ export default class MazeGenerator {
       const image = document.createElement('img');
       image.src = this.canvas.toDataURL("image/png")
       image.style.maxWidth = '100%';
-      
+
       const iframe = document.createElement('iframe');
 
       iframe.style.height = 0;

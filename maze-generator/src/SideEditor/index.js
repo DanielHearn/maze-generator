@@ -8,6 +8,9 @@ import { v4 } from "uuid";
 import './style.css';
 import { OPTIONS, OPTION_TYPES } from '../constants';
 
+const DEFAULT_NUMBER_MIN = 1;
+const DEFAULT_NUMBER_MAX = 10;
+
 const Option = (props) => {
   const { option, value, setOptionField } = props;
 
@@ -19,8 +22,8 @@ const Option = (props) => {
     case OPTION_TYPES.NUMBER:
       return <Stack>
         <span>{option.label}</span>
-        <Input value={value} type="number" min={4} max={50} onChange={(value) => setOptionField(option.key, Number(value.target.value))}/>
-        <Slider value={value} min={4} max={50} onChange={(value) => setOptionField(option.key, value.target.value)}/>
+        <Input value={value} type="number" min={option.min || DEFAULT_NUMBER_MIN} max={option.max || DEFAULT_NUMBER_MAX} onChange={(value) => setOptionField(option.key, Number(value.target.value))}/>
+        <Slider value={value} min={option.min || DEFAULT_NUMBER_MIN} max={option.max || DEFAULT_NUMBER_MAX} onChange={(value) => setOptionField(option.key, value.target.value)}/>
       </Stack>
     case OPTION_TYPES.STRING:
       return <Stack>

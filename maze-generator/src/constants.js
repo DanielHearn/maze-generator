@@ -12,21 +12,36 @@ export const OPTIONS = {
     label: 'Scale',
     type: OPTION_TYPES.NUMBER,
     regen: false,
-    default: 20
+    default: 2,
+    min: 1,
+    max: 5
   },
   width: {
     key: 'width',
     label: 'Width',
     type: OPTION_TYPES.NUMBER,
     regen: true,
-    default: 20
+    default: 20,
+    min: 4,
+    max: 50
   },
   height: {
     key: 'height',
     label: 'Height',
     type: OPTION_TYPES.NUMBER,
     regen: true,
-    default: 20
+    default: 20,
+    min: 4,
+    max: 50
+  },
+  wallWidth: {
+    key: 'wallWidth',
+    label: 'Wall Width',
+    type: OPTION_TYPES.NUMBER,
+    regen: false,
+    default: 1,
+    min: 1,
+    max: 5
   },
   id: {
     key: 'id',
