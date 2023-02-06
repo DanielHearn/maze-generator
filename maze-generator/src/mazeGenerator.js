@@ -5,16 +5,6 @@ export default class MazeGenerator {
   constructor (targetElement, options = generateDefaultOptions()) {
     this.setOptions(options)
     this.targetElement = targetElement
-      
-    this.colors = {
-      wall: '#1a282f',
-      border: '#000000',
-      path: '#cfcfcf',
-      empty: '#ffffff',
-      start: '#ffd100',
-      end: '#2ce141',
-      solved: '#456ecf'
-    }
     this.path = []
     
     this.createCanvas()
@@ -26,6 +16,16 @@ export default class MazeGenerator {
     this.options = cloneDeep(options)
     this.options.scale = this.options.scale * 8
     this.options.wallWidth = this.options.wallWidth * 0.5
+      
+    this.colors = {
+      wall: this.options.wallColor,
+      border: this.options.borderColor,
+      path: this.options.pathColor,
+      empty: this.options.emptyColor,
+      start: this.options.startColor,
+      end: this.options.endColor,
+      solved: this.options.solvedColor
+    }
   }
   regenerate() {
     this.setCanvasSize()

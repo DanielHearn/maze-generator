@@ -4,6 +4,7 @@ import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import Slider from '@mui/joy/Slider';
 import Input from '@mui/joy/Input';
+import { HexColorPicker } from "react-colorful";
 import { v4 } from "uuid";
 import './style.css';
 import { OPTIONS, OPTION_TYPES } from '../constants';
@@ -29,6 +30,12 @@ const Option = (props) => {
       return <Stack>
         <span>{option.label}</span>
         <Input value={value} type="string" onChange={(value) => setOptionField(option.key, Number(value.target.value))}/>
+      </Stack>
+    case OPTION_TYPES.COLOR:
+      return <Stack>
+        <span>{option.label}</span>
+        <Input value={value} type="string" onChange={(value) => setOptionField(option.key, value.target.value)}/>
+        <HexColorPicker color={value} onChange={(value) => setOptionField(option.key, value)} />
       </Stack>
     default:
       return null;
