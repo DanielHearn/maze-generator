@@ -72,10 +72,10 @@ function SideEditor(props) {
 
   return (
     <div className="SideEditor">
-      <Sheet>
+      <Sheet className="scrolling">
         <Stack>
           <Options options={OPTIONS} setOptionField={setOptionField} optionValues={options}/>
-          <Stack spacing={1}>
+          <Stack spacing={1} className="sticky">
             <Button variant="solid" onClick={() => { 
               updateOptions({ id: v4(), solved: false});
             }}>Regenerate</Button>

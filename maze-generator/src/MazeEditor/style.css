@@ -1,9 +1,18 @@
 .MazeEditor {
   display: flex;
   flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
+.MazeEditor__header {
+  display: flex;
+  flex-direction: row;
+}
 .MazeEditor__content {
   display: flex;
   flex-direction: row;
+  overflow: hidden;
+  flex: 1;
 }
