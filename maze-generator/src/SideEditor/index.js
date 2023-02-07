@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import Button from '@mui/joy/Button';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
@@ -11,6 +11,21 @@ import { OPTIONS, OPTION_TYPES } from '../constants';
 
 const DEFAULT_NUMBER_MIN = 1;
 const DEFAULT_NUMBER_MAX = 10;
+
+
+const ColorInput = (props) => {
+  const { option, value, setOptionField } = props;
+  const [open, setOpen] = useState(false)
+
+  return <Stack className="ColorInput">
+    <span>{option.label}</span>
+    <span>
+      <div className="ColorInput__color" style={{ background: value || '#FFFFFF' }} onClick={() => setOpen(!open)}></div>
+      <Input value={value} type="string" onChange={(value) => setOptionField(option.key, value.target.value)}/>
+    </span>
+    {open && <HexColorPicker color={value} onChange={(value) => setOptionField(option.key, value)} />}
+  </Stack>
+} 
 
 const Option = (props) => {
   const { option, value, setOptionField } = props;
@@ -32,11 +47,7 @@ const Option = (props) => {
         <Input value={value} type="string" onChange={(value) => setOptionField(option.key, Number(value.target.value))}/>
       </Stack>
     case OPTION_TYPES.COLOR:
-      return <Stack>
-        <span>{option.label}</span>
-        <Input value={value} type="string" onChange={(value) => setOptionField(option.key, value.target.value)}/>
-        <HexColorPicker color={value} onChange={(value) => setOptionField(option.key, value)} />
-      </Stack>
+      return <ColorInput option={option} value={value} setOptionField={setOptionField}/>
     default:
       return null;
   }

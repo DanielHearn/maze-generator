@@ -7,3 +7,13 @@
   background-color: var(--joy-palette-background-surface);
   z-index: 999;
 }
+
+.ColorInput span {
+  display: flex;
+  flex-direction: row;
+}
+
+.ColorInput__color {
+  width: 20px;
+  cursor: pointer;
+}
