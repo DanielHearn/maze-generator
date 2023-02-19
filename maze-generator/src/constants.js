@@ -4,6 +4,21 @@ export const OPTION_TYPES = {
   NUMBER: 'number',
   STRING: 'string',
   COLOR: 'color',
+  RADIO: 'radio',
+}
+
+export const SIDE_OPTION_TYPES = {
+  TOP: 'top',
+  BOTTOM: 'bottom',
+  LEFT: 'left',
+  RIGHT: 'right',
+}
+
+export const SIDE_OPTION_TITLES = {
+  [SIDE_OPTION_TYPES.TOP]: 'Top',
+  [SIDE_OPTION_TYPES.BOTTOM]: 'Bottom',
+  [SIDE_OPTION_TYPES.LEFT]: 'Left',
+  [SIDE_OPTION_TYPES.RIGHT]: 'Right',
 }
 
 export const OPTIONS = {
@@ -51,6 +66,32 @@ export const OPTIONS = {
     default: 0,
     min: 1,
     max: 360
+  },
+  startSide: {
+    key: 'startSide',
+    label: 'Start Side',
+    type: OPTION_TYPES.RADIO,
+    regen: true,
+    default: SIDE_OPTION_TYPES.TOP,
+    options: {
+      [SIDE_OPTION_TYPES.TOP]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.TOP],
+      [SIDE_OPTION_TYPES.BOTTOM]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.BOTTOM],
+      [SIDE_OPTION_TYPES.LEFT]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.LEFT],
+      [SIDE_OPTION_TYPES.RIGHT]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.RIGHT],
+    }
+  },
+  endSide: {
+    key: 'endSide',
+    label: 'End Side',
+    type: OPTION_TYPES.RADIO,
+    regen: true,
+    default: SIDE_OPTION_TYPES.TOP,
+    options: {
+      [SIDE_OPTION_TYPES.TOP]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.TOP],
+      [SIDE_OPTION_TYPES.BOTTOM]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.BOTTOM],
+      [SIDE_OPTION_TYPES.LEFT]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.LEFT],
+      [SIDE_OPTION_TYPES.RIGHT]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.RIGHT],
+    }
   },
   borderColor: {
     key: 'borderColor',

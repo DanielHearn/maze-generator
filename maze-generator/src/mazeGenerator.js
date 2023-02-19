@@ -1,5 +1,6 @@
 import { generateDefaultOptions } from "./helpers"
 import { cloneDeep } from 'lodash-es'
+import { SIDE_OPTION_TYPES } from './constants'
 
 export default class MazeGenerator {
   constructor (targetElement, options = generateDefaultOptions()) {
@@ -38,7 +39,7 @@ export default class MazeGenerator {
     this.drawMaze()
   }
   generate() {
-    this.maze = new Maze(this.options.width, this.options.height)
+    this.maze = new Maze(this.options.width, this.options.height, this.options.startSide, this.options.endSide)
     this.mazeMap = this.maze.getMaze()
     this.start = this.maze.getStart()
     this.end = this.maze.getEnd()
@@ -250,11 +251,15 @@ export default class MazeGenerator {
 class Maze {
   constructor(
     sizeX = 20,
-    sizeY = 20
+    sizeY = 20,
+    startSide = SIDE_OPTION_TYPES.TOP,
+    endSide = SIDE_OPTION_TYPES.BOTTOM,
   ) {
       
     this.sizeX = sizeX
     this.sizeY = sizeY
+    this.startSide = startSide
+    this.endSide = endSide
     this.paused = false
     
     this.generate()
@@ -292,14 +297,57 @@ class Maze {
     }
     
     // Init start and end points
-    const startX = this.randomIntInRange(1, this.sizeX - 2)
-    const startY = 0
-    const endX = this.randomIntInRange(1, this.sizeX - 2)
-    const endY = this.sizeY - 1
+    let startX = 1;
+    let startY = 0;
+    let endX = 0;
+    let endY = this.sizeY - 1;
+    switch(this.startSide) {
+      case SIDE_OPTION_TYPES.TOP:
+      default:
+        startX = this.randomIntInRange(1, this.sizeX - 2);
+        startY = 0;
+        break;
+      case SIDE_OPTION_TYPES.BOTTOM:
+        startX = this.randomIntInRange(1, this.sizeX - 2);
+        startY = this.sizeY - 1;
+        break;
+      case SIDE_OPTION_TYPES.LEFT:
+        startX = 0;
+        startY = this.randomIntInRange(1, this.sizeY - 2)
+        break;
+      case SIDE_OPTION_TYPES.RIGHT:
+        startX = this.sizeY - 1;
+        startY = this.randomIntInRange(1, this.sizeY - 2)
+        break;
+    }
+
+    switch(this.endSide) {
+      case SIDE_OPTION_TYPES.TOP:
+      default:
+        endX = this.randomIntInRange(1, this.sizeX - 2);
+        endY = 0;
+        break;
+      case SIDE_OPTION_TYPES.BOTTOM:
+        endX = this.randomIntInRange(1, this.sizeX - 2);
+        endY = this.sizeY - 1;
+        break;
+      case SIDE_OPTION_TYPES.LEFT:
+        endX = 0;
+        endY = this.randomIntInRange(1, this.sizeY - 2)
+        break;
+      case SIDE_OPTION_TYPES.RIGHT:
+        endX = this.sizeY - 1;
+        endY = this.randomIntInRange(1, this.sizeY - 2)
+        break;
+    }
     
+    console.log(this.startSide)
     const startCell = new Cell(startX, startY, 'start')
+    console.log('start: ', startCell)
     const endCell = new Cell(endX, endY, 'end')
-    
+    console.log(this.endSide)
+    console.log('end: ', endCell)
+
     this.maze[startX][startY] = startCell
     this.maze[endX][endY] = endCell
     this.start = startCell

@@ -4,6 +4,8 @@ import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import Slider from '@mui/joy/Slider';
 import Input from '@mui/joy/Input';
+import Radio from '@mui/joy/Radio';
+import RadioGroup from '@mui/joy/RadioGroup';
 import { HexColorPicker } from "react-colorful";
 import { v4 } from "uuid";
 import './style.css';
@@ -48,6 +50,16 @@ const Option = (props) => {
       </Stack>
     case OPTION_TYPES.COLOR:
       return <ColorInput option={option} value={value} setOptionField={setOptionField}/>
+    case OPTION_TYPES.RADIO:
+      return  <Stack>
+        <span>{option.label}</span>
+        <RadioGroup
+          value={value}
+          onChange={(value) => setOptionField(option.key, value.target.value)}
+        >
+          {Object.keys(option.options).map((key) => <Radio value={key} label={option.options[key]} />)}
+        </RadioGroup>
+      </Stack>
     default:
       return null;
   }
