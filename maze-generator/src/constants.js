@@ -43,6 +43,15 @@ export const OPTIONS = {
     min: 1,
     max: 5
   },
+  rotate: {
+    key: 'rotate',
+    label: 'Rotate',
+    type: OPTION_TYPES.NUMBER,
+    regen: false,
+    default: 0,
+    min: 1,
+    max: 360
+  },
   borderColor: {
     key: 'borderColor',
     label: 'Border Color',

@@ -32,6 +32,7 @@ export default class MazeGenerator {
     this.generate()
   }
   redraw() {
+    //this.rotate()
     this.clearCanvas()
     this.setCanvasSize()
     this.drawMaze()
@@ -59,9 +60,17 @@ export default class MazeGenerator {
     this.clearCanvas()
     this.canvas.remove()
   }
+  rotate() {
+    if (this.ctx) {
+      this.ctx.translate(this.canvas.width / 2, this.canvas.height / 2);
+      this.ctx.rotate(this.options.rotate * Math.PI / 180)
+      this.ctx.translate(-this.canvas.width / 2, -this.canvas.height / 2);
+    }
+  }
   drawMaze() {
     const maze = this.mazeMap
     if(maze && maze.length) {
+      this.rotate()
       for (let x = 0; x < this.options.width; x++) {
         for (let y = 0; y < this.options.height; y++) {
           this.drawCell(maze[x][y])
