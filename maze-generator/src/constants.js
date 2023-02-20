@@ -64,7 +64,7 @@ export const OPTIONS = {
     type: OPTION_TYPES.NUMBER,
     regen: false,
     default: 0,
-    min: 1,
+    min: 0,
     max: 360
   },
   startSide: {
