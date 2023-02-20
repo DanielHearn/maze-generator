@@ -30,7 +30,7 @@ const ColorInput = (props) => {
 } 
 
 const Option = (props) => {
-  const { option, value, setOptionField } = props;
+  const { option, value, setOptionField, disabledKey = null } = props;
 
   if (value === undefined) {
     return null
@@ -57,7 +57,7 @@ const Option = (props) => {
           value={value}
           onChange={(value) => setOptionField(option.key, value.target.value)}
         >
-          {Object.keys(option.options).map((key) => <Radio value={key} label={option.options[key]} />)}
+          {Object.keys(option.options).map((key) => <Radio value={key} label={option.options[key]} disabled={disabledKey === key}/>)}
         </RadioGroup>
       </Stack>
     default:
@@ -67,7 +67,7 @@ const Option = (props) => {
 
 const Options = (props) => {
   const { options, optionValues, setOptionField } = props;
-  return Object.values(options).map(option => <Option key={option.key} option={option} value={optionValues[option.key]} setOptionField={setOptionField}/>)
+  return Object.values(options).map(option => <Option key={option.key} option={option} value={optionValues[option.key]} setOptionField={setOptionField} disabledKey={option.blockLinked ? optionValues[option.blockLinked] : null}/>)
 }
 
 
