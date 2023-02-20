@@ -85,7 +85,7 @@ export const OPTIONS = {
     label: 'End Side',
     type: OPTION_TYPES.RADIO,
     regen: true,
-    default: SIDE_OPTION_TYPES.TOP,
+    default: SIDE_OPTION_TYPES.BOTTOM,
     options: {
       [SIDE_OPTION_TYPES.TOP]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.TOP],
       [SIDE_OPTION_TYPES.BOTTOM]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.BOTTOM],

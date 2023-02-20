@@ -316,7 +316,7 @@ class Maze {
         startY = this.randomIntInRange(1, this.sizeY - 2)
         break;
       case SIDE_OPTION_TYPES.RIGHT:
-        startX = this.sizeY - 1;
+        startX = this.sizeX - 1;
         startY = this.randomIntInRange(1, this.sizeY - 2)
         break;
     }
@@ -336,7 +336,7 @@ class Maze {
         endY = this.randomIntInRange(1, this.sizeY - 2)
         break;
       case SIDE_OPTION_TYPES.RIGHT:
-        endX = this.sizeY - 1;
+        endX = this.sizeX - 1;
         endY = this.randomIntInRange(1, this.sizeY - 2)
         break;
     }
