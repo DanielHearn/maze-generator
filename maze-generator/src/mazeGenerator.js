@@ -39,7 +39,7 @@ export default class MazeGenerator {
     this.drawMaze()
   }
   generate() {
-    this.maze = new Maze(this.options.width, this.options.height, this.options.startSide, this.options.endSide)
+    this.maze = new Maze(this.options.width, this.options.height, this.options.startLocation, this.options.endLocation)
     this.mazeMap = this.maze.getMaze()
     this.start = this.maze.getStart()
     this.end = this.maze.getEnd()
@@ -252,14 +252,14 @@ class Maze {
   constructor(
     sizeX = 20,
     sizeY = 20,
-    startSide = SIDE_OPTION_TYPES.TOP,
-    endSide = SIDE_OPTION_TYPES.BOTTOM,
+    startLocation = SIDE_OPTION_TYPES.TOP,
+    endLocation = SIDE_OPTION_TYPES.BOTTOM,
   ) {
       
     this.sizeX = sizeX
     this.sizeY = sizeY
-    this.startSide = startSide
-    this.endSide = endSide
+    this.startLocation = startLocation
+    this.endLocation = endLocation
     this.paused = false
     
     this.generate()
@@ -301,7 +301,7 @@ class Maze {
     let startY = 0;
     let endX = 0;
     let endY = this.sizeY - 1;
-    switch(this.startSide) {
+    switch(this.startLocation) {
       case SIDE_OPTION_TYPES.TOP:
       default:
         startX = this.randomIntInRange(1, this.sizeX - 2);
@@ -319,9 +319,13 @@ class Maze {
         startX = this.sizeX - 1;
         startY = this.randomIntInRange(1, this.sizeY - 2)
         break;
+      case SIDE_OPTION_TYPES.CENTER:
+        startX = Math.floor(this.sizeX / 2);
+        startY = Math.floor(this.sizeY / 2);
+        break;
     }
 
-    switch(this.endSide) {
+    switch(this.endLocation) {
       case SIDE_OPTION_TYPES.TOP:
       default:
         endX = this.randomIntInRange(1, this.sizeX - 2);
@@ -341,12 +345,10 @@ class Maze {
         break;
     }
     
-    console.log(this.startSide)
+    console.log(this.startLocation)
     const startCell = new Cell(startX, startY, 'start')
     console.log('start: ', startCell)
     const endCell = new Cell(endX, endY, 'end')
-    console.log(this.endSide)
-    console.log('end: ', endCell)
 
     this.maze[startX][startY] = startCell
     this.maze[endX][endY] = endCell

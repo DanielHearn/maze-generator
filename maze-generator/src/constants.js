@@ -12,6 +12,7 @@ export const SIDE_OPTION_TYPES = {
   BOTTOM: 'bottom',
   LEFT: 'left',
   RIGHT: 'right',
+  CENTER: 'center',
 }
 
 export const SIDE_OPTION_TITLES = {
@@ -19,6 +20,7 @@ export const SIDE_OPTION_TITLES = {
   [SIDE_OPTION_TYPES.BOTTOM]: 'Bottom',
   [SIDE_OPTION_TYPES.LEFT]: 'Left',
   [SIDE_OPTION_TYPES.RIGHT]: 'Right',
+  [SIDE_OPTION_TYPES.CENTER]: 'Center',
 }
 
 export const OPTIONS = {
@@ -67,9 +69,9 @@ export const OPTIONS = {
     min: 0,
     max: 360
   },
-  startSide: {
-    key: 'startSide',
-    label: 'Start Side',
+  startLocation: {
+    key: 'startLocation',
+    label: 'Start Location',
     type: OPTION_TYPES.RADIO,
     regen: true,
     default: SIDE_OPTION_TYPES.TOP,
@@ -78,12 +80,13 @@ export const OPTIONS = {
       [SIDE_OPTION_TYPES.BOTTOM]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.BOTTOM],
       [SIDE_OPTION_TYPES.LEFT]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.LEFT],
       [SIDE_OPTION_TYPES.RIGHT]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.RIGHT],
+      [SIDE_OPTION_TYPES.CENTER]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.CENTER],
     },
-    blockLinked: 'endSide'
+    blockLinked: 'endLocation'
   },
-  endSide: {
-    key: 'endSide',
-    label: 'End Side',
+  endLocation: {
+    key: 'endLocation',
+    label: 'End Location',
     type: OPTION_TYPES.RADIO,
     regen: true,
     default: SIDE_OPTION_TYPES.BOTTOM,
@@ -93,7 +96,7 @@ export const OPTIONS = {
       [SIDE_OPTION_TYPES.LEFT]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.LEFT],
       [SIDE_OPTION_TYPES.RIGHT]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.RIGHT],
     },
-    blockLinked: 'startSide'
+    blockLinked: 'startLocation'
   },
   borderColor: {
     key: 'borderColor',
