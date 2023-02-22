@@ -81,13 +81,15 @@ export default class MazeGenerator {
   }
   drawCell(cell, solved) {
     const cellType = cell.getType()
+    const cellSubType = cell.getSubType()
     const cellColor = cell.solved ? this.colors.solved : this.colors[cellType]
+    const cellSubColor = this.colors[cellSubType]
     const cellX = cell.getX()
     const cellY = cell.getY()
     const scale = this.options.scale
     
     // Draw cell interior
-    this.ctx.fillStyle = cellColor
+    this.ctx.fillStyle = cellSubColor || cellColor
     this.ctx.fillRect(
       cellX * scale,
       cellY * scale,
@@ -345,10 +347,8 @@ class Maze {
         break;
     }
     
-    console.log(this.startLocation)
-    const startCell = new Cell(startX, startY, 'start')
-    console.log('start: ', startCell)
-    const endCell = new Cell(endX, endY, 'end')
+    const startCell = new Cell(startX, startY, 'start', 'start')
+    const endCell = new Cell(endX, endY, 'end', 'end')
 
     this.maze[startX][startY] = startCell
     this.maze[endX][endY] = endCell
@@ -442,10 +442,11 @@ class Maze {
 }
 
 class Cell {
-  constructor(x, y, type) {
+  constructor(x, y, type, subType = null) {
     this.x = x
     this.y = y
     this.type = type
+    this.subType = subType
     this.walls = {
       top: true,
       bottom: true,
@@ -464,6 +465,9 @@ class Cell {
   }
   getType() {
     return this.type
+  }
+  getSubType() {
+    return this.subType
   }
   getWalls() {
     return this.walls
