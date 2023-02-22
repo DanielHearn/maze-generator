@@ -10,6 +10,7 @@ import { HexColorPicker } from "react-colorful";
 import { v4 } from "uuid";
 import './style.css';
 import { OPTIONS, OPTION_TYPES } from '../constants';
+import { generateDefaultOptions } from '../helpers';
 
 const DEFAULT_NUMBER_MIN = 1;
 const DEFAULT_NUMBER_MAX = 10;
@@ -99,6 +100,9 @@ function SideEditor(props) {
         <Stack>
           <Options options={OPTIONS} setOptionField={setOptionField} optionValues={options}/>
           <Stack spacing={1} className="sticky">
+          <Button variant="outlined" onClick={() => { 
+              updateOptions(generateDefaultOptions());
+            }}>Reset</Button>
             <Button variant="solid" onClick={() => { 
               updateOptions({ id: v4(), solved: false});
             }}>Regenerate</Button>
