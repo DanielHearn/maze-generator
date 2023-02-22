@@ -1,7 +1,12 @@
 .MazePreview {
   display: flex;
   flex-direction: column;
-  width: 60%;
+  flex: 1;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+
+#MazeCanvas {
+  overflow: hidden;
 }

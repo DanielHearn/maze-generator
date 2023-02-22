@@ -97,7 +97,11 @@ function SideEditor(props) {
   return (
     <div className="SideEditor">
       <Sheet className="scrolling">
-        <Stack>
+        <Stack        
+          sx={{
+            py: 2,
+            px: 2,
+          }}>
           <Options options={OPTIONS} setOptionField={setOptionField} optionValues={options}/>
           <Stack spacing={1} className="sticky">
           <Button variant="outlined" onClick={() => { 

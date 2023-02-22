@@ -9,6 +9,11 @@
 .MazeEditor__header {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5em 1em;
+  background: var(--joy-palette-background-surface);
+  color: var(--joy-palette-neutral-plainColor);
 }
 .MazeEditor__content {
   display: flex;

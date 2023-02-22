@@ -1,7 +1,6 @@
 .SideEditor {
   display: flex;
   flex-direction: column;
-  flex: 1;
   align-items: center;
   justify-content: flex-start;
   background-color: var(--joy-palette-background-surface);

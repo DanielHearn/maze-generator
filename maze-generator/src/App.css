@@ -11,6 +11,6 @@
 .sticky {
   position: sticky;
   bottom: 0;
-  background-color: var(--joy-palette-common-white);
+  background-color: var(--joy-palette-background-surface);
   z-index: 100;
 }
