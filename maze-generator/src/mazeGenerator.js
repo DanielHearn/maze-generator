@@ -15,7 +15,7 @@ export default class MazeGenerator {
   }
   setOptions(options) {
     this.options = cloneDeep(options)
-    this.options.scale = this.options.scale * 8
+    this.options.scale = 12 + (this.options.scale * 0.5)
     this.options.wallWidth = this.options.wallWidth * 0.5
       
     this.colors = {

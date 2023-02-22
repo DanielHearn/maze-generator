@@ -29,9 +29,9 @@ export const OPTIONS = {
     label: 'Scale',
     type: OPTION_TYPES.NUMBER,
     regen: false,
-    default: 2,
+    default: 1,
     min: 1,
-    max: 5
+    max: 100
   },
   width: {
     key: 'width',
