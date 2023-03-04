@@ -7,7 +7,7 @@ import Button from '@mui/joy/Button';
 import './style.css';
 
 function MazeEditor() {
-  const { mode, setMode } = useColorScheme();
+  const { mode, setMode } = useColorScheme({ theme: 'dark' });
   const [options, setOptions] = useState(generateDefaultOptions())
   const [loaded, setLoaded] = useState(false)
   const [maze, setMaze] = useState(null)
