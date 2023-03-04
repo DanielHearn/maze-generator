@@ -1,6 +1,6 @@
 import { generateDefaultOptions } from "./helpers"
 import { cloneDeep } from 'lodash-es'
-import { SIDE_OPTION_TYPES } from './constants'
+import { SHAPE_OPTION_TYPES, SIDE_OPTION_TYPES } from './constants'
 
 export default class MazeGenerator {
   constructor (targetElement, options = generateDefaultOptions()) {
@@ -39,7 +39,7 @@ export default class MazeGenerator {
     this.drawMaze()
   }
   generate() {
-    this.maze = new Maze(this.options.width, this.options.height, this.options.startLocation, this.options.endLocation)
+    this.maze = new Maze(this.options.width, this.options.height, this.options.startLocation, this.options.endLocation, this.options.shape)
     this.mazeMap = this.maze.getMaze()
     this.start = this.maze.getStart()
     this.end = this.maze.getEnd()
@@ -256,6 +256,7 @@ class Maze {
     sizeY = 20,
     startLocation = SIDE_OPTION_TYPES.TOP,
     endLocation = SIDE_OPTION_TYPES.BOTTOM,
+    shape = SHAPE_OPTION_TYPES.SQUARE,
   ) {
       
     this.sizeX = sizeX
@@ -263,6 +264,7 @@ class Maze {
     this.startLocation = startLocation
     this.endLocation = endLocation
     this.paused = false
+    this.shape = shape
     
     this.generate()
   }
@@ -284,6 +286,17 @@ class Maze {
     this.path = []
   }
   generateCellType(x, y) {
+      if (this.shape === SHAPE_OPTION_TYPES.HOLLOW_SQUARE) {
+          const centerTop = Math.ceil(this.sizeY / 3) - 1
+          const centerBottom = Math.ceil((this.sizeY / 3) * 2)
+          const centerLeft = Math.ceil(this.sizeX / 3) - 1
+          const centerRight = Math.ceil((this.sizeX / 3) * 2)
+          if (x > centerLeft && x < centerRight && y > centerTop && y < centerBottom) {
+            return 'border'
+          }
+      }
+
+
       return this.isMazeBorder(x, y) ? 'border' : 'empty'
   }
   initCells() {
