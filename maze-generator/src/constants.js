@@ -23,7 +23,34 @@ export const SIDE_OPTION_TITLES = {
   [SIDE_OPTION_TYPES.CENTER]: 'Center',
 }
 
+export const SHAPE_OPTION_TYPES = {
+  SQUARE: 'square',
+  HOLLOW_SQUARE: 'hollow_square',
+  CIRCLE: 'circle',
+  DONUT: 'donut',
+}
+
+export const SHAPE_OPTION_TITLES = {
+  [SHAPE_OPTION_TYPES.SQUARE]: 'Square',
+  [SHAPE_OPTION_TYPES.HOLLOW_SQUARE]: 'Hollow Square',
+  [SHAPE_OPTION_TYPES.CIRCLE]: 'Circle',
+  [SHAPE_OPTION_TYPES.DONUT]: 'Donut',
+}
+
 export const OPTIONS = {
+  shape: {
+    key: 'shape',
+    label: 'Shape',
+    type: OPTION_TYPES.RADIO,
+    regen: true,
+    default: SHAPE_OPTION_TYPES.SQUARE,
+    options: {
+      [SHAPE_OPTION_TYPES.SQUARE]: SHAPE_OPTION_TITLES[SHAPE_OPTION_TYPES.SQUARE],
+      [SHAPE_OPTION_TYPES.HOLLOW_SQUARE]: SHAPE_OPTION_TITLES[SHAPE_OPTION_TYPES.HOLLOW_SQUARE],
+      [SHAPE_OPTION_TYPES.CIRCLE]: SHAPE_OPTION_TITLES[SHAPE_OPTION_TYPES.CIRCLE],
+      [SHAPE_OPTION_TYPES.DONUT]: SHAPE_OPTION_TITLES[SHAPE_OPTION_TYPES.DONUT],
+    },
+  },
   scale: {
     key: 'scale',
     label: 'Scale',
