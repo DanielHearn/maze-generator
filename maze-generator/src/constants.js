@@ -158,14 +158,14 @@ export const OPTIONS = {
     label: 'Start Color',
     type: OPTION_TYPES.COLOR,
     regen: false,
-    default: '#ffd100',
+    default: '#00ff19',
   },
   endColor: {
     key: 'endColor',
     label: 'End Color',
     type: OPTION_TYPES.COLOR,
     regen: false,
-    default: '#2ce141',
+    default: '#e02d2d',
   },
   solvedColor: {
     key: 'solvedColor',
