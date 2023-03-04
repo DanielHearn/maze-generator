@@ -21,7 +21,7 @@ function MazeEditor() {
   return (
     <div className="MazeEditor">
       <div className="MazeEditor__header">
-        Maze Generator
+        <span>Maze Generator (WIP) by <a href="https://www.danielhearn.co.uk">Daniel Hearn</a></span>
         <Button
           variant="outlined"
           onClick={() => {

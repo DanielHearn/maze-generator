@@ -15,6 +15,16 @@
   background: var(--joy-palette-background-surface);
   color: var(--joy-palette-neutral-plainColor);
 }
+
+.MazeEditor__header a {
+  text-decoration: none;
+  color: var(--joy-palette-primary-solidBg);
+}
+.MazeEditor__header a:visited {
+  text-decoration: none;
+  color: var(--joy-palette-primary-solidBg);
+}
+
 .MazeEditor__content {
   display: flex;
   flex-direction: row;
