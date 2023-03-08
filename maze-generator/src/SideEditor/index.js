@@ -36,7 +36,7 @@ const Option = (props) => {
   if (value === undefined) {
     return null
   }
-  console.log(option.key)
+  
   switch (option.type) {
     case OPTION_TYPES.NUMBER:
       return <Stack>

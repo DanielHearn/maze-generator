@@ -5,8 +5,17 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background: white;
+  border: none;
+}
+
+.MazePreview > div {
+  background: white;
+  border: none;
 }
 
 #MazeCanvas {
   overflow: hidden;
+  background: white;
+  border: none;
 }
