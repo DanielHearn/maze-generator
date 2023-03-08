@@ -109,7 +109,14 @@ export const OPTIONS = {
       [SIDE_OPTION_TYPES.RIGHT]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.RIGHT],
       [SIDE_OPTION_TYPES.CENTER]: SIDE_OPTION_TITLES[SIDE_OPTION_TYPES.CENTER],
     },
-    blockLinked: 'endLocation'
+    blockLinked: 'endLocation',
+    optionDisabled: (options, key) => {
+      if (options.shape === SHAPE_OPTION_TYPES.HOLLOW_SQUARE && key === SIDE_OPTION_TYPES.CENTER) {
+        return true;
+      }
+
+      return false;
+    }
   },
   endLocation: {
     key: 'endLocation',

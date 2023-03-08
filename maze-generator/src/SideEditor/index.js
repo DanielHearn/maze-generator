@@ -31,12 +31,12 @@ const ColorInput = (props) => {
 } 
 
 const Option = (props) => {
-  const { option, value, setOptionField, disabledKey = null } = props;
+  const { option, value, optionValues, setOptionField, disabledKey = null } = props;
 
   if (value === undefined) {
     return null
   }
-  
+  console.log(option.key)
   switch (option.type) {
     case OPTION_TYPES.NUMBER:
       return <Stack>
@@ -58,7 +58,7 @@ const Option = (props) => {
           value={value}
           onChange={(value) => setOptionField(option.key, value.target.value)}
         >
-          {Object.keys(option.options).map((key) => <Radio value={key} label={option.options[key]} disabled={disabledKey === key}/>)}
+          {Object.keys(option.options).map((key) => <Radio value={key} label={option.options[key]} disabled={disabledKey === key || (option.optionDisabled?.(optionValues, key) || false)}/>)}
         </RadioGroup>
       </Stack>
     default:
@@ -68,7 +68,7 @@ const Option = (props) => {
 
 const Options = (props) => {
   const { options, optionValues, setOptionField } = props;
-  return Object.values(options).map(option => <Option key={option.key} option={option} value={optionValues[option.key]} setOptionField={setOptionField} disabledKey={option.blockLinked ? optionValues[option.blockLinked] : null}/>)
+  return Object.values(options).map(option => <Option key={option.key} option={option} value={optionValues[option.key]} optionValues={optionValues} setOptionField={setOptionField} disabledKey={option.blockLinked ? optionValues[option.blockLinked] : null}/>)
 }
 
 
