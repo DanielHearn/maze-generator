@@ -3,14 +3,25 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import { CssVarsProvider } from '@mui/joy/styles';
 import '@fontsource/public-sans';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App/>,
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <CssVarsProvider>
-      <App />
+      <RouterProvider router={router} />
     </CssVarsProvider>
   </React.StrictMode>
 );

@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import MazePreview from '../MazePreview'
 import SideEditor from '../SideEditor'
 import { generateDefaultOptions, copyToClipboard } from '../helpers'
 import { useColorScheme } from '@mui/joy/styles';
 import Button from '@mui/joy/Button';
+import { useNavigate } from "react-router-dom";
 import './style.css';
 
 function MazeEditor() {
@@ -11,16 +12,28 @@ function MazeEditor() {
   const [options, setOptions] = useState(generateDefaultOptions())
   const [loaded, setLoaded] = useState(false)
   const [maze, setMaze] = useState(null)
+  const navigate = useNavigate();
 
   const copyUrl = () => {
     copyToClipboard(window.location.href)
   }
 
+  const updateUrl = useCallback((options) => {
+    const params = new URLSearchParams();
+    for (const key in options) {
+      params.set(key, options[key])
+    }
+    
+    navigate(`?${params.toString()}`);
+  }, [navigate])
+
   useEffect(() => {
     if (options) {
       setLoaded(true)
+
+      updateUrl(options)
     }
-  }, [options])
+  }, [options, updateUrl])
 
   return (
     <div className="MazeEditor">
