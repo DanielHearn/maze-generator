@@ -4,7 +4,7 @@ import SideEditor from '../SideEditor'
 import { generateDefaultOptions, copyToClipboard } from '../helpers'
 import { useColorScheme } from '@mui/joy/styles';
 import Button from '@mui/joy/Button';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams   } from "react-router-dom";
 import './style.css';
 
 function MazeEditor() {
@@ -13,28 +13,37 @@ function MazeEditor() {
   const [loaded, setLoaded] = useState(false)
   const [maze, setMaze] = useState(null)
   const navigate = useNavigate();
+  let [searchParams, setSearchParams] = useSearchParams();
 
   const copyUrl = () => {
     copyToClipboard(window.location.href)
   }
 
-  const updateUrl = useCallback((options) => {
-    const params = new URLSearchParams();
-    for (const key in options) {
-      params.set(key, options[key])
-    }
-    
-    navigate(`?${params.toString()}`);
-  }, [navigate])
+  const updateUrl = useCallback((options) => {    
+    setSearchParams(options);
+  }, [setSearchParams])
 
   useEffect(() => {
-    if (options) {
-      setLoaded(true)
+    if (searchParams) {
+      if (!loaded) {
+        const newOptions = generateDefaultOptions()
 
+        for (const [key, value] of searchParams.entries()) {
+          newOptions[key] = value
+        }
+
+        setOptions(newOptions)
+      }
+      setLoaded(true)
+    }
+  }, [searchParams, loaded])
+
+  useEffect(() => {
+    if (options && loaded) {
       updateUrl(options)
     }
-  }, [options, updateUrl])
-
+  }, [options, loaded, updateUrl])
+  
   return (
     <div className="MazeEditor">
       <div className="MazeEditor__header">
