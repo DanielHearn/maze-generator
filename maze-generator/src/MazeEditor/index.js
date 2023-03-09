@@ -4,7 +4,7 @@ import SideEditor from '../SideEditor'
 import { generateDefaultOptions, copyToClipboard } from '../helpers'
 import { useColorScheme } from '@mui/joy/styles';
 import Button from '@mui/joy/Button';
-import { useNavigate, useSearchParams   } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import './style.css';
 
 function MazeEditor() {
@@ -12,7 +12,6 @@ function MazeEditor() {
   const [options, setOptions] = useState(generateDefaultOptions())
   const [loaded, setLoaded] = useState(false)
   const [maze, setMaze] = useState(null)
-  const navigate = useNavigate();
   let [searchParams, setSearchParams] = useSearchParams();
 
   const copyUrl = () => {
