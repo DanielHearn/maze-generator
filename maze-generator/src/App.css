@@ -14,3 +14,29 @@
   background-color: var(--joy-palette-background-surface);
   z-index: 100;
 }
+
+
+:root {
+  --toastify-font-family: var(--joy-fontFamily-body) !important;
+  --toastify-toast-min-height: 48px !important;
+}
+
+.Toastify__progress-bar-theme--light {
+  background: var(--joy-palette-background-surface) !important;
+}
+
+.Toastify__toast {
+ align-items: center !important;
+}
+
+.Toastify__toast svg {
+  fill: var(--joy-palette-background-surface) !important;
+ }
+
+.Toastify__toast-container--bottom-left {
+ bottom: 3em !important;
+}
+
+.Toastify__toast-container--top-left {
+ top: 3em !important;
+}

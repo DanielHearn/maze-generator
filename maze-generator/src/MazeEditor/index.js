@@ -5,6 +5,7 @@ import { generateDefaultOptions, copyToClipboard } from '../helpers'
 import { useColorScheme } from '@mui/joy/styles';
 import Button from '@mui/joy/Button';
 import { useSearchParams } from "react-router-dom";
+import { toast } from 'react-toastify';
 import './style.css';
 
 function MazeEditor() {
@@ -15,6 +16,8 @@ function MazeEditor() {
   let [searchParams, setSearchParams] = useSearchParams();
 
   const copyUrl = () => {
+    toast.clearWaitingQueue();
+    toast(`Copied URL to clipboard`);
     copyToClipboard(window.location.href)
   }
 

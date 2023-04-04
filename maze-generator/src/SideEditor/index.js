@@ -8,9 +8,10 @@ import Radio from '@mui/joy/Radio';
 import RadioGroup from '@mui/joy/RadioGroup';
 import { HexColorPicker } from "react-colorful";
 import { v4 } from "uuid";
-import './style.css';
 import { OPTIONS, OPTION_TYPES } from '../constants';
 import { generateDefaultOptions } from '../helpers';
+import { toast } from 'react-toastify';
+import './style.css';
 
 const DEFAULT_NUMBER_MIN = 1;
 const DEFAULT_NUMBER_MAX = 10;
@@ -105,13 +106,19 @@ function SideEditor(props) {
           <Options options={OPTIONS} setOptionField={setOptionField} optionValues={options}/>
           <Stack spacing={1} className="sticky">
           <Button variant="outlined" onClick={() => { 
+                toast.clearWaitingQueue();
+                toast(`Reset Maze`);
               updateOptions(generateDefaultOptions());
             }}>Reset</Button>
             <Button variant="solid" onClick={() => { 
               updateOptions({ id: v4(), solved: false});
             }}>Regenerate</Button>
             <Button variant="solid" onClick={() => setOptionField('solved', !options.solved)}>{ !options.solved ? 'Solve' : 'Unsolve' }</Button>
-            <Button variant="outlined" onClick={() => maze.save()}>Save</Button>
+            <Button variant="outlined" onClick={() => {
+              toast.clearWaitingQueue();
+              toast(`Downloaded Maze as Image`);
+              maze.save()
+            }}>Download</Button>
             <Button variant="outlined" onClick={() => maze.print()}>Print</Button>
           </Stack>
         </Stack>
