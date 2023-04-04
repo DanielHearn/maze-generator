@@ -42,8 +42,8 @@ const Option = (props) => {
     case OPTION_TYPES.NUMBER:
       return <Stack>
         <span>{option.label}</span>
-        <Input value={value} type="number" min={option.min || DEFAULT_NUMBER_MIN} max={option.max || DEFAULT_NUMBER_MAX} onChange={(value) => setOptionField(option.key, Number(value.target.value))}/>
-        <Slider value={value} min={option.min || DEFAULT_NUMBER_MIN} max={option.max || DEFAULT_NUMBER_MAX} onChange={(value) => setOptionField(option.key, value.target.value)}/>
+        <Input value={value} type="number" min={option.min !== undefined ? option.min : DEFAULT_NUMBER_MIN} max={option.max !== undefined ? option.max : DEFAULT_NUMBER_MAX} onChange={(value) => setOptionField(option.key, Number(value.target.value))}/>
+        <Slider value={value} min={option.min !== undefined ? option.min : DEFAULT_NUMBER_MIN} max={option.max !== undefined ? option.max : DEFAULT_NUMBER_MAX} onChange={(value) => setOptionField(option.key, value.target.value)}/>
       </Stack>
     case OPTION_TYPES.STRING:
       return <Stack>
