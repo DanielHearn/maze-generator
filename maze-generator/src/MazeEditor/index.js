@@ -60,7 +60,7 @@ function MazeEditor() {
               setMode(mode === 'light' ? 'dark' : 'light');
             }}
           >
-            {mode === 'light' ? 'Turn dark' : 'Turn light'}
+            {mode === 'light' ? 'Toggle Dark Mode' : 'Toggle Light Mode'}
           </Button>
         </div>
       </div>
