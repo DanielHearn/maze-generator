@@ -107,6 +107,28 @@ function SideEditor(props) {
   }
 
 
+  async function paste() {
+    return await navigator.clipboard.readText();
+  }
+
+ const pasteMazeData = async () => {
+    const data = await paste()
+    console.log(data)
+    if (data) {
+      let parsedValue = ''
+      try {
+        parsedValue = JSON.parse(data)
+      } catch (e) {
+        console.error(e)
+      }
+      
+      if (parsedValue) {
+        loadMaze(parsedValue.maze, parsedValue.options)
+      }
+    }
+  }
+
+
  if (!maze) {
   return null;
  }
@@ -140,6 +162,12 @@ function SideEditor(props) {
               onClick={copyMazeData}
             >
               Copy Maze Data
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={pasteMazeData}
+            >
+              Load Maze From Clipbaord
             </Button>
           </Stack>
           <Options options={OPTIONS} setOptionField={setOptionField} optionValues={options}/>
