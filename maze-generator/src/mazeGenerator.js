@@ -97,7 +97,6 @@ export default class MazeGenerator {
     }
   }
   drawCell(cell, solved) {
-    console.log(cell)
     const cellType = cell.getType()
     const cellSubType = cell.getSubType()
     const cellColor = cell.solved ? this.colors.solved : this.colors[cellType]
