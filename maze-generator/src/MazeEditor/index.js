@@ -25,6 +25,13 @@ function MazeEditor() {
     setSearchParams(options);
   }, [setSearchParams])
 
+  const loadMaze = (mazeData, options) => {
+    if (maze) {
+      setOptions(options)
+      maze.setMaze(mazeData, options)
+    }
+  }
+
   useEffect(() => {
     if (searchParams) {
       if (!loaded) {
@@ -71,7 +78,7 @@ function MazeEditor() {
         {loaded && 
           <>
             <MazePreview maze={maze} setMaze={setMaze} options={options} setOptions={setOptions}/>
-            <SideEditor maze={maze} options={options} setOptions={setOptions}/>
+            <SideEditor maze={maze} options={options} setOptions={setOptions} loadMaze={loadMaze}/>
           </>
         }
       </div>

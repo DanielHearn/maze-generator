@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useMemo } from 'react'
 import Button from '@mui/joy/Button';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
@@ -74,7 +74,7 @@ const Options = (props) => {
 
 
 function SideEditor(props) {
-  const { options, setOptions, maze } = props
+  const { options, setOptions, loadMaze, maze } = props
   
   const setOptionField = useCallback((field, value) => {
     setOptions({
@@ -91,6 +91,14 @@ function SideEditor(props) {
     })
  }, [options, setOptions]);
 
+ const stringifiedData = useMemo(() => {
+  if (!maze) {
+    return ''
+  }
+
+  return `{"maze":${maze.stringifyMaze()},"options":${JSON.stringify(options)}}`
+ }, [maze, options])
+
  if (!maze) {
   return null;
  }
@@ -103,6 +111,23 @@ function SideEditor(props) {
             py: 2,
             px: 2,
           }}>
+          <Stack>
+            <span>Maze Data</span>
+            <Input value={stringifiedData} type="string" onChange={e => {
+              if (e.target.value) {
+                let parsedValue = ''
+                try {
+                  parsedValue = JSON.parse(e.target.value)
+                } catch (e) {
+                  console.error(e)
+                }
+                
+                if (parsedValue) {
+                  loadMaze(parsedValue.maze, parsedValue.options)
+                }
+              }
+            }}/>
+          </Stack>
           <Options options={OPTIONS} setOptionField={setOptionField} optionValues={options}/>
           <Stack spacing={1} className="sticky">
           <Button variant="outlined" onClick={() => { 

@@ -38,6 +38,23 @@ export default class MazeGenerator {
     this.setCanvasSize()
     this.drawMaze()
   }
+  stringifyMaze() {
+    if (this.maze?.maze) {
+      return JSON.stringify(this.maze.maze)
+    }
+    
+    return ''
+  }
+  setMaze(maze, options) {
+    if (maze && options) {
+      this.setOptions(options)
+      this.maze.setMaze(maze)
+      this.mazeMap = this.maze.getMaze()
+      this.start = this.maze.getStart()
+      this.end = this.maze.getEnd()
+      this.redraw()
+    }
+  }
   generate() {
     this.maze = new Maze(this.options.width, this.options.height, this.options.startLocation, this.options.endLocation, this.options.shape)
     this.mazeMap = this.maze.getMaze()
@@ -80,6 +97,7 @@ export default class MazeGenerator {
     }
   }
   drawCell(cell, solved) {
+    console.log(cell)
     const cellType = cell.getType()
     const cellSubType = cell.getSubType()
     const cellColor = cell.solved ? this.colors.solved : this.colors[cellType]
@@ -268,6 +286,25 @@ class Maze {
     
     this.generate()
   }
+  setMaze(maze) {
+    this.maze = [];
+    this.path = [];
+    for (let x = 0; x < maze.length; x++) {
+      this.maze[x] = []
+      for (let y = 0; y < maze[x].length; y++) {
+        const rawCellData = maze[x][y];
+
+        const cell = new Cell(rawCellData.x, rawCellData.y, rawCellData.type, rawCellData.subType, rawCellData.walls)
+        if (cell.getSubType() === 'start') {
+          this.start = cell
+        }
+        if (cell.getSubType() === 'end') {
+          this.end = cell
+        }
+        this.maze[x][y] = cell
+      }
+    }
+  }
   randomIntInRange(min, max) {
    min = Math.ceil(min);
    max = Math.floor(max);
@@ -455,17 +492,17 @@ class Maze {
 }
 
 class Cell {
-  constructor(x, y, type, subType = null) {
+  constructor(x, y, type, subType = null, walls = {
+    top: true,
+    bottom: true,
+    left: true,
+    right: true
+  }) {
     this.x = x
     this.y = y
     this.type = type
     this.subType = subType
-    this.walls = {
-      top: true,
-      bottom: true,
-      left: true,
-      right: true
-    }
+    this.walls = walls
   }
   getX() {
     return this.x
