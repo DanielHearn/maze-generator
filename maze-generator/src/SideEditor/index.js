@@ -11,6 +11,7 @@ import { v4 } from "uuid";
 import { OPTIONS, OPTION_TYPES } from '../constants';
 import { generateDefaultOptions } from '../helpers';
 import { toast } from 'react-toastify';
+import { copyToClipboard } from '../helpers'
 import './style.css';
 
 const DEFAULT_NUMBER_MIN = 1;
@@ -99,6 +100,13 @@ function SideEditor(props) {
   return `{"maze":${maze.stringifyMaze()},"options":${JSON.stringify(options)}}`
  }, [maze, options])
 
+ const copyMazeData = () => {
+    toast.clearWaitingQueue();
+    toast(`Copied Maze Data to clipboard`);
+    copyToClipboard(stringifiedData)
+  }
+
+
  if (!maze) {
   return null;
  }
@@ -127,6 +135,12 @@ function SideEditor(props) {
                 }
               }
             }}/>
+            <Button
+              variant="outlined"
+              onClick={copyMazeData}
+            >
+              Copy Maze Data
+            </Button>
           </Stack>
           <Options options={OPTIONS} setOptionField={setOptionField} optionValues={options}/>
           <Stack spacing={1} className="sticky">

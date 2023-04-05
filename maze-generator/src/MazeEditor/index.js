@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
 import MazePreview from '../MazePreview'
 import SideEditor from '../SideEditor'
-import { generateDefaultOptions, copyToClipboard } from '../helpers'
+import { generateDefaultOptions } from '../helpers'
 import { useColorScheme } from '@mui/joy/styles';
 import Button from '@mui/joy/Button';
 import { useSearchParams } from "react-router-dom";
-import { toast } from 'react-toastify';
 import './style.css';
 
 function MazeEditor() {
@@ -15,11 +14,11 @@ function MazeEditor() {
   const [maze, setMaze] = useState(null)
   let [searchParams, setSearchParams] = useSearchParams();
 
-  const copyUrl = () => {
+  /*const copyUrl = () => {
     toast.clearWaitingQueue();
     toast(`Copied URL to clipboard`);
     copyToClipboard(window.location.href)
-  }
+  }*/
 
   const updateUrl = useCallback((options) => {    
     setSearchParams(options);
@@ -58,12 +57,12 @@ function MazeEditor() {
       <div className="MazeEditor__header">
         <span>Maze Generator (WIP) by <a href="https://www.danielhearn.co.uk">Daniel Hearn</a></span>
         <div>
-          <Button
+          {/*<Button
             variant="outlined"
             onClick={copyUrl}
           >
             Copy Url
-          </Button>
+          </Button>*/}
           <Button
             variant="outlined"
             onClick={() => {
