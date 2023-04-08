@@ -101,7 +101,7 @@ function SideEditor(props) {
  }, [maze, options])
 
  const copyMazeData = () => {
-    toast(`Copied Maze Data to clipboard`);
+    toast(`Copied Maze Data to Clipboard`);
     copyToClipboard(stringifiedData)
   }
 
@@ -115,7 +115,7 @@ function SideEditor(props) {
       parsedValue = JSON.parse(data)
     } catch (e) {
       console.error(e)
-      toast(`Error loading maze data from clipboard`);
+      toast(`Error Loading Maze Data From Clipboard`);
     }
     
     if (parsedValue) {
@@ -166,7 +166,7 @@ function SideEditor(props) {
           <Options options={OPTIONS} setOptionField={setOptionField} optionValues={options}/>
           <Stack spacing={1} className="sticky">
           <Button variant="outlined" onClick={() => { 
-                toast(`Reset Maze`);
+                toast(`Reset Maze Options`);
               updateOptions(generateDefaultOptions());
             }}>Reset</Button>
             <Button variant="solid" onClick={() => { 
