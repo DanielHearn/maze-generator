@@ -101,30 +101,32 @@ function SideEditor(props) {
  }, [maze, options])
 
  const copyMazeData = () => {
-    toast.clearWaitingQueue();
     toast(`Copied Maze Data to clipboard`);
     copyToClipboard(stringifiedData)
   }
-
 
   async function paste() {
     return await navigator.clipboard.readText();
   }
 
+  const parseMazeData = (data) => {
+    let parsedValue = ''
+    try {
+      parsedValue = JSON.parse(data)
+    } catch (e) {
+      console.error(e)
+      toast(`Error loading maze data from clipboard`);
+    }
+    
+    if (parsedValue) {
+      loadMaze(parsedValue.maze, parsedValue.options)
+    }
+  }
+
  const pasteMazeData = async () => {
     const data = await paste()
-    console.log(data)
     if (data) {
-      let parsedValue = ''
-      try {
-        parsedValue = JSON.parse(data)
-      } catch (e) {
-        console.error(e)
-      }
-      
-      if (parsedValue) {
-        loadMaze(parsedValue.maze, parsedValue.options)
-      }
+      parseMazeData(data)
     }
   }
 
@@ -145,16 +147,7 @@ function SideEditor(props) {
             <span>Maze Data</span>
             <Input value={stringifiedData} type="string" onChange={e => {
               if (e.target.value) {
-                let parsedValue = ''
-                try {
-                  parsedValue = JSON.parse(e.target.value)
-                } catch (e) {
-                  console.error(e)
-                }
-                
-                if (parsedValue) {
-                  loadMaze(parsedValue.maze, parsedValue.options)
-                }
+                parseMazeData(e.target.value)
               }
             }}/>
             <Button
@@ -173,7 +166,6 @@ function SideEditor(props) {
           <Options options={OPTIONS} setOptionField={setOptionField} optionValues={options}/>
           <Stack spacing={1} className="sticky">
           <Button variant="outlined" onClick={() => { 
-                toast.clearWaitingQueue();
                 toast(`Reset Maze`);
               updateOptions(generateDefaultOptions());
             }}>Reset</Button>
@@ -182,7 +174,6 @@ function SideEditor(props) {
             }}>Regenerate</Button>
             <Button variant="solid" onClick={() => setOptionField('solved', !options.solved)}>{ !options.solved ? 'Solve' : 'Unsolve' }</Button>
             <Button variant="outlined" onClick={() => {
-              toast.clearWaitingQueue();
               toast(`Downloaded Maze as Image`);
               maze.save()
             }}>Download</Button>
