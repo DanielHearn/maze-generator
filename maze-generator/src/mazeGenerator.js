@@ -203,6 +203,7 @@ export default class MazeGenerator {
     } 
   }
   solve() {
+    console.log(2)
     this.path = []
     this.dfs(this.maze.getStart())
     

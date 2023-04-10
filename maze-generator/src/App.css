@@ -13,6 +13,7 @@
   bottom: 0;
   background-color: var(--joy-palette-background-surface);
   z-index: 100;
+  padding-bottom: 16px;
 }
 
 

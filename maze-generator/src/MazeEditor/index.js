@@ -37,7 +37,15 @@ function MazeEditor() {
         const newOptions = generateDefaultOptions()
 
         for (const [key, value] of searchParams.entries()) {
-          newOptions[key] = value
+          let parsedValue = value;
+          if (typeof parsedValue === 'string') {
+            try {
+              parsedValue = JSON.parse(value)
+            } catch (e) {
+              // prob ok just not bool/num
+            }
+          }
+          newOptions[key] = parsedValue
         }
 
         setOptions(newOptions)
