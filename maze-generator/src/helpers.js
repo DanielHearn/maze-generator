@@ -1,4 +1,5 @@
 import { OPTIONS } from "./constants";
+import { v4 } from "uuid";
 
 export const generateDefaultOptions = () => {
   return {
@@ -6,6 +7,8 @@ export const generateDefaultOptions = () => {
       acc[value.key] = value.default
       return acc
     }, {}),
+    solved: false,
+    id: v4()
   }
 }
 

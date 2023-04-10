@@ -166,8 +166,9 @@ function SideEditor(props) {
           <Options options={OPTIONS} setOptionField={setOptionField} optionValues={options}/>
           <Stack spacing={1} className="sticky">
           <Button variant="outlined" onClick={() => { 
-                toast(`Reset Maze Options`);
+              toast(`Reset Maze Options`);
               updateOptions(generateDefaultOptions());
+              maze.unsolve();
             }}>Reset</Button>
             <Button variant="solid" onClick={() => { 
               updateOptions({ id: v4(), solved: false});
