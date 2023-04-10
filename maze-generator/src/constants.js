@@ -87,7 +87,7 @@ export const OPTIONS = {
     min: 1,
     max: 5
   },
-  rotate: {
+  /*rotate: {
     key: 'rotate',
     label: 'Rotate',
     type: OPTION_TYPES.NUMBER,
@@ -95,7 +95,7 @@ export const OPTIONS = {
     default: 0,
     min: 0,
     max: 360
-  },
+  },*/
   startLocation: {
     key: 'startLocation',
     label: 'Start Location',

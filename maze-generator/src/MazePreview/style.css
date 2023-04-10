@@ -12,10 +12,13 @@
 .MazePreview > div {
   background: white;
   border: none;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
 }
 
 #MazeCanvas {
-  overflow: hidden;
   background: white;
   border: none;
+  padding: 16px;
 }
