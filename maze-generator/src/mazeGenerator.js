@@ -229,7 +229,8 @@ export default class MazeGenerator {
   save() {
     if (this.canvas) {
       const link = document.createElement('a');
-      link.download = `maze_${new Date().toISOString()}.png`;
+      let fileName = `maze_${new Date().toISOString()}_${this.options?.solved ? 'solved' : 'unsolved'}`;
+      link.download = `${fileName}.png`;
       link.href = this.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
       link.click();
       link.remove();
