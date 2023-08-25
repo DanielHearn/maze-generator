@@ -102,6 +102,7 @@ const Option = (props) => {
             {Object.keys(option.options).map((key) => (
               <Radio
                 value={key}
+                key={key}
                 label={option.options[key]}
                 disabled={
                   disabledKey === key || option.optionDisabled?.(optionValues, key) || false
