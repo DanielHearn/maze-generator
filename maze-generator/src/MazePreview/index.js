@@ -27,12 +27,17 @@ function MazePreview(props) {
     return filteredOptions
   }, [options])
 
+  const optionsChanged = useMemo(() => {
+    return !isEqual(optionsThatRegenerated, prevOptionsThatRegenerated)
+  }, [optionsThatRegenerated, prevOptionsThatRegenerated])
+
   useEffect(() => {
     if (loaded && maze) {
       maze.setOptions(options)
-      if (!isEqual(optionsThatRegenerated, prevOptionsThatRegenerated) && !loadMaze) {
+      if (optionsChanged && !loadMaze) {
         maze.regenerate()
       }
+      console.log(1)
       setPrevOptionsThatRegenerated(optionsThatRegenerated)
       maze.redraw()
       if (options?.solved) {
@@ -41,7 +46,7 @@ function MazePreview(props) {
         maze.unsolve()
       }
     }
-  }, [loaded, loadMaze, maze, options, optionsThatRegenerated])
+  }, [loaded, loadMaze, maze, options, optionsThatRegenerated, optionsChanged])
 
   useEffect(() => {
     if (mazeTargetRef?.current && !loaded && options && !maze) {
