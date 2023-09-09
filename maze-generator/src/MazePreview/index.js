@@ -41,7 +41,7 @@ function MazePreview(props) {
         maze.unsolve()
       }
     }
-  }, [loaded, loadMaze, maze, options, optionsThatRegenerated, prevOptionsThatRegenerated])
+  }, [loaded, loadMaze, maze, options, optionsThatRegenerated])
 
   useEffect(() => {
     if (mazeTargetRef?.current && !loaded && options && !maze) {

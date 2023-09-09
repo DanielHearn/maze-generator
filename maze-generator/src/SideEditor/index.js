@@ -249,19 +249,6 @@ function SideEditor(props) {
                     paddingBottom: 2,
                   }}
                 >
-                  <span style={{ marginBottom: 4 }}>Maze Data</span>
-                  <Input
-                    value={stringifiedData}
-                    type="string"
-                    onChange={(e) => {
-                      if (e.target.value) {
-                        parseMazeData(e.target.value)
-                      }
-                    }}
-                    sx={{
-                      marginBottom: 1,
-                    }}
-                  />
                   <Button
                     variant="outlined"
                     onClick={copyMazeData}
