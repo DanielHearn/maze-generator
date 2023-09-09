@@ -14,6 +14,7 @@
   background-color: var(--joy-palette-background-surface);
   z-index: 100;
   padding-bottom: 16px;
+  width: 100%;
 }
 
 

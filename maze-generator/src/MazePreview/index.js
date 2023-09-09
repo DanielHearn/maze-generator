@@ -1,20 +1,26 @@
 import { useEffect, useState, useRef, useMemo } from 'react'
-import Sheet from '@mui/joy/Sheet';
+import Sheet from '@mui/joy/Sheet'
 import MazeGenerator from '../mazeGenerator'
 import { cloneDeep, isEqual } from 'lodash-es'
-import { OPTIONS } from '../constants';
-import './style.css';
+import { OPTIONS } from '../constants'
+import './style.css'
 
 function MazePreview(props) {
-  const { options, maze, setMaze } = props
+  const { options, maze, setMaze, loadMaze } = props
   const mazeTargetRef = useRef(null)
   const [loaded, setLoaded] = useState(false)
   const [prevOptionsThatRegenerated, setPrevOptionsThatRegenerated] = useState(null)
 
   const optionsThatRegenerated = useMemo(() => {
     const filteredOptions = cloneDeep(options)
-    for (const option in filteredOptions) {
-      if (!OPTIONS[option]?.regen) {
+    for (const option in OPTIONS) {
+      if (OPTIONS?.[option]?.items) {
+        for (const subOption in OPTIONS[option].items) {
+          if (!OPTIONS[option].items[subOption]?.regen) {
+            delete filteredOptions[subOption]
+          }
+        }
+      } else if (!OPTIONS?.[option]?.regen) {
         delete filteredOptions[option]
       }
     }
@@ -23,27 +29,19 @@ function MazePreview(props) {
 
   useEffect(() => {
     if (loaded && maze) {
-      if (!isEqual(optionsThatRegenerated, prevOptionsThatRegenerated)) {
-        maze.setOptions(options)
+      maze.setOptions(options)
+      if (!isEqual(optionsThatRegenerated, prevOptionsThatRegenerated) && !loadMaze) {
         maze.regenerate()
-      } else {
-        maze.setOptions(options)
-        maze.redraw()
       }
       setPrevOptionsThatRegenerated(optionsThatRegenerated)
-    }
-  }, [loaded, maze, options, optionsThatRegenerated, prevOptionsThatRegenerated])
-
-  useEffect(() => {
-    if (loaded && maze) {
-      maze.setOptions(options)
+      maze.redraw()
       if (options?.solved) {
         maze.solve()
       } else {
         maze.unsolve()
       }
     }
-  }, [loaded, maze, options, options.solved])
+  }, [loaded, loadMaze, maze, options, optionsThatRegenerated, prevOptionsThatRegenerated])
 
   useEffect(() => {
     if (mazeTargetRef?.current && !loaded && options && !maze) {
@@ -55,11 +53,11 @@ function MazePreview(props) {
 
   return (
     <div className="MazePreview">
-        <Sheet variant="outlined">
-          <div id="MazeCanvas" ref={mazeTargetRef}/>
+      <Sheet variant="outlined">
+        <div id="MazeCanvas" ref={mazeTargetRef} />
       </Sheet>
     </div>
-  );
+  )
 }
 
-export default MazePreview;
+export default MazePreview

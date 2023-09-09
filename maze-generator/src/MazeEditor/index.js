@@ -11,6 +11,7 @@ function MazeEditor() {
   const { mode, setMode } = useColorScheme({ theme: 'dark' })
   const [options, setOptions] = useState(generateDefaultOptions())
   const [loaded, setLoaded] = useState(false)
+  const [loadMaze, setLoadMaze] = useState(false)
   const [maze, setMaze] = useState(null)
   let [searchParams, setSearchParams] = useSearchParams()
 
@@ -27,8 +28,9 @@ function MazeEditor() {
     [setSearchParams],
   )
 
-  const loadMaze = (mazeData, options) => {
+  const loadMazeFromData = (mazeData, options) => {
     if (maze) {
+      setLoadMaze(true)
       setOptions(options)
       maze.setMaze(mazeData, options)
     }
@@ -89,8 +91,25 @@ function MazeEditor() {
       <div className="MazeEditor__content">
         {loaded && (
           <>
-            <MazePreview maze={maze} setMaze={setMaze} options={options} setOptions={setOptions} />
-            <SideEditor maze={maze} options={options} setOptions={setOptions} loadMaze={loadMaze} />
+            <MazePreview
+              maze={maze}
+              setMaze={setMaze}
+              options={options}
+              setOptions={(options) => {
+                setLoadMaze(false)
+                setOptions(options)
+              }}
+              loadMaze={loadMaze}
+            />
+            <SideEditor
+              maze={maze}
+              options={options}
+              setOptions={(options) => {
+                setLoadMaze(false)
+                setOptions(options)
+              }}
+              loadMaze={loadMazeFromData}
+            />
           </>
         )}
       </div>

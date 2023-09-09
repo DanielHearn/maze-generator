@@ -1,14 +1,20 @@
-import { OPTIONS } from "./constants";
-import { v4 } from "uuid";
+import { OPTIONS } from './constants'
+import { v4 } from 'uuid'
 
 export const generateDefaultOptions = () => {
   return {
     ...Object.values(OPTIONS).reduce((acc, value) => {
-      acc[value.key] = value.default
+      if (value.items) {
+        Object.values(value.items).forEach((subValue) => {
+          acc[subValue.key] = subValue.default
+        })
+      } else {
+        acc[value.key] = value.default
+      }
       return acc
     }, {}),
     solved: false,
-    id: v4()
+    id: v4(),
   }
 }
 

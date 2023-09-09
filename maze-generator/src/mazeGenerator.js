@@ -186,23 +186,29 @@ export default class MazeGenerator {
     }
   }
   solve() {
-    console.log(2)
     this.path = []
     this.dfs(this.maze.getStart())
 
     for (let i = 0; i < this.path.length; i++) {
       const cell = this.path[i]
       cell.solved = true
+      cell.visited = true
       this.drawCell(cell)
     }
   }
   unsolve() {
-    for (let i = 0; i < this.path.length; i++) {
-      const cell = this.path[i]
-      cell.visited = false
-      cell.solved = false
-      this.drawCell(cell)
+    for (let x = 0; x < this.options.width; x++) {
+      for (let y = 0; y < this.options.height; y++) {
+        const cell = this.maze?.maze?.[x]?.[y]
+        if (cell) {
+          cell.visited = false
+          cell.solved = false
+
+          this.drawCell(cell, false)
+        }
+      }
     }
+
     this.path = []
   }
   randomIntInRange(min, max) {

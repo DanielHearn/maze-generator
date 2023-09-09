@@ -12,6 +12,10 @@ import { OPTIONS, OPTION_TYPES } from '../constants'
 import { generateDefaultOptions } from '../helpers'
 import { toast } from 'react-toastify'
 import { copyToClipboard } from '../helpers'
+import Accordion from '@mui/joy/Accordion'
+import AccordionDetails from '@mui/joy/AccordionDetails'
+import AccordionGroup from '@mui/joy/AccordionGroup'
+import AccordionSummary from '@mui/joy/AccordionSummary'
 import './style.css'
 
 const DEFAULT_NUMBER_MIN = 1
@@ -119,19 +123,36 @@ const Option = (props) => {
 
 const Options = (props) => {
   const { options, optionValues, setOptionField } = props
-  return Object.values(options).map((option) => (
-    <Option
-      key={option.key}
-      option={option}
-      value={optionValues[option.key]}
-      optionValues={optionValues}
-      setOptionField={setOptionField}
-      disabledKey={option.blockLinked ? optionValues[option.blockLinked] : null}
-      sx={{
-        marginBottom: 1,
-      }}
-    />
-  ))
+
+  return Object.values(options)
+    .filter((option) => !option.hidden && option.items)
+    .map((option) => (
+      <AccordionGroup
+        sx={{
+          flexGrow: 0,
+          width: '100%',
+        }}
+      >
+        <Accordion>
+          <AccordionSummary>{option.title}</AccordionSummary>
+          <AccordionDetails>
+            {Object.values(option.items).map((item) => (
+              <Option
+                key={item.key}
+                option={item}
+                value={optionValues[item.key]}
+                optionValues={optionValues}
+                setOptionField={setOptionField}
+                disabledKey={item.blockLinked ? optionValues[item.blockLinked] : null}
+                sx={{
+                  marginBottom: 1,
+                }}
+              />
+            ))}
+          </AccordionDetails>
+        </Accordion>
+      </AccordionGroup>
+    ))
 }
 
 function SideEditor(props) {
@@ -205,41 +226,58 @@ function SideEditor(props) {
       <Sheet className="scrolling">
         <Stack
           sx={{
+            direction: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
             py: 2,
             px: 2,
+            flexGrow: 0,
+            height: '100%',
           }}
         >
-          <Stack
+          <AccordionGroup
             sx={{
-              paddingBottom: 2,
+              flexGrow: 0,
+              width: '100%',
             }}
           >
-            <span style={{ marginBottom: 4 }}>Maze Data</span>
-            <Input
-              value={stringifiedData}
-              type="string"
-              onChange={(e) => {
-                if (e.target.value) {
-                  parseMazeData(e.target.value)
-                }
-              }}
-              sx={{
-                marginBottom: 1,
-              }}
-            />
-            <Button
-              variant="outlined"
-              onClick={copyMazeData}
-              sx={{
-                marginBottom: 1,
-              }}
-            >
-              Copy Maze Data
-            </Button>
-            <Button variant="outlined" onClick={pasteMazeData}>
-              Load Maze From Clipbaord
-            </Button>
-          </Stack>
+            <Accordion>
+              <AccordionSummary>Save & Load</AccordionSummary>
+              <AccordionDetails>
+                <Stack
+                  sx={{
+                    paddingBottom: 2,
+                  }}
+                >
+                  <span style={{ marginBottom: 4 }}>Maze Data</span>
+                  <Input
+                    value={stringifiedData}
+                    type="string"
+                    onChange={(e) => {
+                      if (e.target.value) {
+                        parseMazeData(e.target.value)
+                      }
+                    }}
+                    sx={{
+                      marginBottom: 1,
+                    }}
+                  />
+                  <Button
+                    variant="outlined"
+                    onClick={copyMazeData}
+                    sx={{
+                      marginBottom: 1,
+                    }}
+                  >
+                    Copy Maze Data
+                  </Button>
+                  <Button variant="outlined" onClick={pasteMazeData}>
+                    Load Maze From Clipbaord
+                  </Button>
+                </Stack>
+              </AccordionDetails>
+            </Accordion>
+          </AccordionGroup>
           <Options options={OPTIONS} setOptionField={setOptionField} optionValues={options} />
           <Stack spacing={1} className="sticky">
             <Button
