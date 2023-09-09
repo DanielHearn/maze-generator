@@ -69,7 +69,7 @@ function MazeEditor() {
     <div className="MazeEditor">
       <div className="MazeEditor__header">
         <span>
-          Maze Generator (WIP) by <a href="https://www.danielhearn.co.uk">Daniel Hearn</a>
+          Maze Generator by <a href="https://www.danielhearn.co.uk">Daniel Hearn</a>
         </span>
         <div>
           {/*<Button
