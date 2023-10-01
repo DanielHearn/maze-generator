@@ -323,6 +323,15 @@ class Maze {
       if (x > centerLeft && x < centerRight && y > centerTop && y < centerBottom) {
         return 'border'
       }
+    } else if (this.shape === SHAPE_OPTION_TYPES.DIAMOND && this.sizeX > 8 && this.sizeY > 8) {
+      if (
+        x + y < Math.floor(this.sizeX / 2) ||
+        this.sizeX - x + (this.sizeY - y) < Math.ceil(this.sizeX / 2) ||
+        y - x > Math.floor(this.sizeX / 2) ||
+        x - y > Math.ceil(this.sizeX / 2)
+      ) {
+        return 'border'
+      }
     }
 
     return this.isMazeBorder(x, y) ? 'border' : 'empty'
@@ -342,6 +351,7 @@ class Maze {
     // Init start and end points
     let startX = 1
     let startY = 0
+
     let endX = 0
     let endY = this.sizeY - 1
     switch (this.startLocation) {
@@ -386,6 +396,51 @@ class Maze {
         endX = this.sizeX - 1
         endY = this.randomIntInRange(1, this.sizeY - 2)
         break
+    }
+
+    if (this.shape === SHAPE_OPTION_TYPES.DIAMOND) {
+      switch (this.startLocation) {
+        case SIDE_OPTION_TYPES.TOP:
+        default:
+          startX = Math.ceil(this.sizeX / 2)
+          startY = 0
+          break
+        case SIDE_OPTION_TYPES.BOTTOM:
+          startX = Math.ceil(this.sizeX / 2)
+          startY = this.sizeY - 1
+          break
+        case SIDE_OPTION_TYPES.LEFT:
+          startX = 0
+          startY = Math.ceil(this.sizeY / 2)
+          break
+        case SIDE_OPTION_TYPES.RIGHT:
+          startX = this.sizeX - 1
+          startY = Math.ceil(this.sizeY / 2)
+          break
+        case SIDE_OPTION_TYPES.CENTER:
+          startX = Math.floor(this.sizeX / 2)
+          startY = Math.floor(this.sizeY / 2)
+          break
+      }
+      switch (this.endLocation) {
+        case SIDE_OPTION_TYPES.TOP:
+        default:
+          endX = Math.ceil(this.sizeX / 2)
+          endY = 0
+          break
+        case SIDE_OPTION_TYPES.BOTTOM:
+          endX = Math.ceil(this.sizeX / 2)
+          endY = this.sizeY - 1
+          break
+        case SIDE_OPTION_TYPES.LEFT:
+          endX = 0
+          endY = Math.ceil(this.sizeY / 2)
+          break
+        case SIDE_OPTION_TYPES.RIGHT:
+          endX = this.sizeX - 1
+          endY = Math.ceil(this.sizeY / 2)
+          break
+      }
     }
 
     const startCell = new Cell(startX, startY, 'start', 'start')

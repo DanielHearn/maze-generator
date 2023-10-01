@@ -8,7 +8,7 @@ import Radio from '@mui/joy/Radio'
 import RadioGroup from '@mui/joy/RadioGroup'
 import { HexColorPicker } from 'react-colorful'
 import { v4 } from 'uuid'
-import { OPTIONS, OPTION_TYPES } from '../constants'
+import { OPTIONS, OPTION_TYPES, SHAPE_OPTION_TYPES } from '../constants'
 import { generateDefaultOptions } from '../helpers'
 import { toast } from 'react-toastify'
 import { copyToClipboard } from '../helpers'
@@ -160,10 +160,24 @@ function SideEditor(props) {
 
   const setOptionField = useCallback(
     (field, value) => {
+      let otherChanges = {}
+      if (options.shape === SHAPE_OPTION_TYPES.DIAMOND) {
+        if (field === OPTIONS.shape.items.width.key) {
+          otherChanges[OPTIONS.shape.items.height.key] = value
+        } else if (field === OPTIONS.shape.items.height.key) {
+          otherChanges[OPTIONS.shape.items.width.key] = value
+        }
+      } else {
+        if (field === OPTIONS.shape.items.shape.key && value === SHAPE_OPTION_TYPES.DIAMOND) {
+          otherChanges[OPTIONS.shape.items.height.key] = options.width
+        }
+      }
+
       setOptions({
         ...options,
         solved: false,
         [field]: value,
+        ...otherChanges,
       })
     },
     [options, setOptions],
