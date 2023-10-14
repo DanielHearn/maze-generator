@@ -163,7 +163,8 @@ function SideEditor(props) {
       let otherChanges = {}
       if (
         options.shape === SHAPE_OPTION_TYPES.DIAMOND ||
-        options.shape === SHAPE_OPTION_TYPES.CIRCLE
+        options.shape === SHAPE_OPTION_TYPES.CIRCLE ||
+        options.shape === SHAPE_OPTION_TYPES.HOLLOW_CIRCLE
       ) {
         if (field === OPTIONS.shape.items.width.key) {
           otherChanges[OPTIONS.shape.items.height.key] = value
