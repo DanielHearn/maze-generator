@@ -332,6 +332,8 @@ class Maze {
       ) {
         return 'border'
       }
+    } else if (this.shape === SHAPE_OPTION_TYPES.CIRCLE && this.sizeX > 8 && this.sizeY > 8) {
+      return 'border'
     }
 
     return this.isMazeBorder(x, y) ? 'border' : 'empty'
@@ -345,6 +347,26 @@ class Maze {
         const cell = new Cell(x, y, cellType)
 
         this.maze[x][y] = cell
+      }
+    }
+
+    if (this.shape === SHAPE_OPTION_TYPES.CIRCLE && this.sizeX > 8 && this.sizeY > 8) {
+      for (let r = Math.floor(this.sizeX / 2); r >= 0; r--) {
+        let x1, y1
+        let x = Math.floor(this.sizeX / 2)
+        let y = Math.floor(this.sizeX / 2)
+
+        let minAngle = Math.acos(1 - 1 / r)
+        for (let angle = 0; angle <= 360; angle += minAngle) {
+          x1 = r * Math.cos(angle)
+          y1 = r * Math.sin(angle)
+          const cellX = Math.floor(x + x1)
+          const cellY = Math.floor(y + y1)
+          const cell = new Cell(cellX, cellY, 'empty')
+          if (this.maze[cellX] && this.maze[cellY]) {
+            this.maze[Math.floor(x + x1)][Math.floor(y + y1)] = cell
+          }
+        }
       }
     }
 
@@ -398,7 +420,7 @@ class Maze {
         break
     }
 
-    if (this.shape === SHAPE_OPTION_TYPES.DIAMOND) {
+    if (this.shape === SHAPE_OPTION_TYPES.DIAMOND || this.shape === SHAPE_OPTION_TYPES.CIRCLE) {
       switch (this.startLocation) {
         case SIDE_OPTION_TYPES.TOP:
         default:

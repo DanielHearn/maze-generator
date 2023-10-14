@@ -161,14 +161,20 @@ function SideEditor(props) {
   const setOptionField = useCallback(
     (field, value) => {
       let otherChanges = {}
-      if (options.shape === SHAPE_OPTION_TYPES.DIAMOND) {
+      if (
+        options.shape === SHAPE_OPTION_TYPES.DIAMOND ||
+        options.shape === SHAPE_OPTION_TYPES.CIRCLE
+      ) {
         if (field === OPTIONS.shape.items.width.key) {
           otherChanges[OPTIONS.shape.items.height.key] = value
         } else if (field === OPTIONS.shape.items.height.key) {
           otherChanges[OPTIONS.shape.items.width.key] = value
         }
       } else {
-        if (field === OPTIONS.shape.items.shape.key && value === SHAPE_OPTION_TYPES.DIAMOND) {
+        if (
+          field === OPTIONS.shape.items.shape.key &&
+          (value === SHAPE_OPTION_TYPES.DIAMOND || value === SHAPE_OPTION_TYPES.CIRCLE)
+        ) {
           otherChanges[OPTIONS.shape.items.height.key] = options.width
         }
       }
