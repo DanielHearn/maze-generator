@@ -37,7 +37,6 @@ function MazePreview(props) {
       if (optionsChanged && !loadMaze) {
         maze.regenerate()
       }
-      console.log(1)
       setPrevOptionsThatRegenerated(optionsThatRegenerated)
       maze.redraw()
       if (options?.solved) {

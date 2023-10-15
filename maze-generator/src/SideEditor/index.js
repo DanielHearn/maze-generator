@@ -222,7 +222,6 @@ function SideEditor(props) {
     try {
       parsedValue = JSON.parse(data)
     } catch (e) {
-      console.error(e)
       toast(`Error Loading Maze Data From Clipboard`)
     }
 

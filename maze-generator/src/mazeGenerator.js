@@ -345,6 +345,26 @@ class Maze {
     return this.isMazeBorder(x, y) ? 'border' : 'empty'
   }
   initCells() {
+    const generateCircle = (maxRadius, minRadius) => {
+      for (let r = maxRadius; r >= minRadius; r--) {
+        let x1, y1
+        const x = Math.floor(this.sizeX / 2)
+        const y = Math.floor(this.sizeX / 2)
+
+        const minAngle = Math.acos(1 - 1 / r)
+        for (let angle = 0; angle <= 360; angle += minAngle) {
+          x1 = r * Math.cos(angle)
+          y1 = r * Math.sin(angle)
+          const cellX = Math.floor(x + x1)
+          const cellY = Math.floor(y + y1)
+          const cell = new Cell(cellX, cellY, 'empty')
+          if (this.maze[cellX] && this.maze[cellY]) {
+            this.maze[cellX][cellY] = cell
+          }
+        }
+      }
+    }
+
     // Init maze 2d array and walls
     for (let x = 0; x < this.sizeX; x++) {
       this.maze[x] = []
@@ -357,42 +377,10 @@ class Maze {
     }
 
     if (this.shape === SHAPE_OPTION_TYPES.CIRCLE && this.sizeX > 8 && this.sizeY > 8) {
-      for (let r = Math.floor(this.sizeX / 2); r >= 0; r--) {
-        let x1, y1
-        let x = Math.floor(this.sizeX / 2)
-        let y = Math.floor(this.sizeX / 2)
-
-        let minAngle = Math.acos(1 - 1 / r)
-        for (let angle = 0; angle <= 360; angle += minAngle) {
-          x1 = r * Math.cos(angle)
-          y1 = r * Math.sin(angle)
-          const cellX = Math.floor(x + x1)
-          const cellY = Math.floor(y + y1)
-          const cell = new Cell(cellX, cellY, 'empty')
-          if (this.maze[cellX] && this.maze[cellY]) {
-            this.maze[Math.floor(x + x1)][Math.floor(y + y1)] = cell
-          }
-        }
-      }
+      generateCircle(Math.floor(this.sizeX / 2), 0)
     }
     if (this.shape === SHAPE_OPTION_TYPES.HOLLOW_CIRCLE && this.sizeX > 8 && this.sizeY > 8) {
-      for (let r = Math.floor(this.sizeX / 2); r >= Math.floor(this.sizeX / 4); r--) {
-        let x1, y1
-        let x = Math.floor(this.sizeX / 2)
-        let y = Math.floor(this.sizeX / 2)
-
-        let minAngle = Math.acos(1 - 1 / r)
-        for (let angle = 0; angle <= 360; angle += minAngle) {
-          x1 = r * Math.cos(angle)
-          y1 = r * Math.sin(angle)
-          const cellX = Math.floor(x + x1)
-          const cellY = Math.floor(y + y1)
-          const cell = new Cell(cellX, cellY, 'empty')
-          if (this.maze[cellX] && this.maze[cellY]) {
-            this.maze[Math.floor(x + x1)][Math.floor(y + y1)] = cell
-          }
-        }
-      }
+      generateCircle(Math.floor(this.sizeX / 2), Math.floor(this.sizeX / 4))
     }
 
     // Init start and end points
