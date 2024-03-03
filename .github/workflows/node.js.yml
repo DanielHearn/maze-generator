@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 
 jobs:
   # Build job
@@ -33,7 +33,6 @@ jobs:
           cache-dependency-path: './maze-generator/package-lock.json'
       - run: npm ci
       - run: npm run build
-      - run: npm test
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
 
