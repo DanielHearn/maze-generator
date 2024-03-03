@@ -16,7 +16,9 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-    
+    defaults:
+      run:
+        working-directory: ./maze-generator
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,6 +30,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          cache-dependency-path: './maze-generator/package-lock.json'
       - run: npm ci
       - run: npm run build
       - run: npm test
