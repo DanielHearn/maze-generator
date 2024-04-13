@@ -1,10 +1,28 @@
 .SideEditor {
+  position: static;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   background-color: var(--joy-palette-background-surface);
   z-index: 999;
+  transition: width 0.2s;
+  width: 300px;
+  right: 0;
+  overflow: hidden;
+}
+
+.SideEditor > .MuiSheet-root > .MuiStack-root {
+  overflow: auto;
+}
+
+.SideEditor--closed {
+  width: 0;
+}
+
+.SideEditor--open {
+  width: 300px;
 }
 
 .ColorInput span {

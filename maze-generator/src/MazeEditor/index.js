@@ -12,6 +12,7 @@ function MazeEditor() {
   const [options, setOptions] = useState(generateDefaultOptions())
   const [loaded, setLoaded] = useState(false)
   const [loadMaze, setLoadMaze] = useState(false)
+  const [editorOpen, setEditorOpen] = useState(true)
   const [maze, setMaze] = useState(null)
   let [searchParams, setSearchParams] = useSearchParams()
 
@@ -84,7 +85,15 @@ function MazeEditor() {
               setMode(mode === 'light' ? 'dark' : 'light')
             }}
           >
-            {mode === 'light' ? 'Toggle Dark Mode' : 'Toggle Light Mode'}
+            {mode === 'light' ? 'Enable Dark Mode' : 'Enable Light Mode'}
+          </Button>{' '}
+          <Button
+            variant="outlined"
+            onClick={() => {
+              setEditorOpen(!editorOpen)
+            }}
+          >
+            {editorOpen ? '>' : '<'}
           </Button>
         </div>
       </div>
@@ -109,6 +118,7 @@ function MazeEditor() {
                 setOptions(options)
               }}
               loadMaze={loadMazeFromData}
+              visible={editorOpen}
             />
           </>
         )}

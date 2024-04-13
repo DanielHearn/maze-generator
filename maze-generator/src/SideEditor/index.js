@@ -156,7 +156,7 @@ const Options = (props) => {
 }
 
 function SideEditor(props) {
-  const { options, setOptions, loadMaze, maze } = props
+  const { options, setOptions, loadMaze, maze, visible } = props
 
   const setOptionField = useCallback(
     (field, value) => {
@@ -242,7 +242,7 @@ function SideEditor(props) {
   }
 
   return (
-    <div className="SideEditor">
+    <div className={`SideEditor ${visible ? 'SideEditor--open' : 'SideEditor--closed'}`}>
       <Sheet className="scrolling">
         <Stack
           sx={{
